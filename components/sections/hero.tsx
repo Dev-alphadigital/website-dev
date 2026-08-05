@@ -1,21 +1,58 @@
 import { heroContent } from "@/lib/content";
 import { CursorGlow } from "@/components/shared/cursor-glow";
-import { FloatBadge } from "@/components/shared/float-badge";
-import { CounterOnScroll } from "@/components/shared/counter-on-scroll";
+import Floating, { FloatingElement } from "@/components/ui/parallax-floating";
+
+const floatingLogos: { src: string; alt: string; depth: number; position: string; size: string }[] = [
+  { src: "/logos/hakem-ai.png", alt: "Hakem AI", depth: 0.6, position: "top-[6%] left-[3%]", size: "w-16 md:w-20" },
+  { src: "/logos/sensely.png", alt: "Sensely", depth: 1.4, position: "top-[22%] left-[2%]", size: "w-20 md:w-24" },
+  { src: "/logos/enso.png", alt: "Enso", depth: 0.8, position: "top-[40%] left-[4%]", size: "w-14 md:w-16" },
+  { src: "/logos/clipper-ai.png", alt: "ClipperAI", depth: 2, position: "top-[57%] left-[2%]", size: "w-20 md:w-24" },
+  { src: "/logos/levity.png", alt: "Levity", depth: 1, position: "top-[74%] left-[5%]", size: "w-16 md:w-20" },
+  { src: "/logos/patientory.png", alt: "Patientory Inc.", depth: 1.6, position: "top-[88%] left-[9%]", size: "w-24 md:w-28" },
+  { src: "/logos/rayseen.png", alt: "Rayseen", depth: 1.7, position: "top-[12%] left-[13%]", size: "w-16 md:w-20" },
+  { src: "/logos/voicecenta.png", alt: "Voicecenta.ai", depth: 1.2, position: "top-[3%] left-[30%]", size: "w-20 md:w-24" },
+  { src: "/logos/appiel-ai.png", alt: "Appiel AI", depth: 0.7, position: "top-[2%] left-[60%]", size: "w-16 md:w-20" },
+  { src: "/logos/matchmap.png", alt: "MatchMap", depth: 1.8, position: "top-[5%] left-[83%]", size: "w-20 md:w-24" },
+  { src: "/logos/vikk-ai.png", alt: "VIKK AI", depth: 1, position: "top-[21%] left-[94%]", size: "w-16 md:w-20" },
+  { src: "/logos/keyfree.png", alt: "Kez Keyfree", depth: 2.2, position: "top-[39%] left-[93%]", size: "w-20 md:w-24" },
+  { src: "/logos/karahi-boys.png", alt: "Karahi Boys", depth: 0.9, position: "top-[57%] left-[95%]", size: "w-16 md:w-20" },
+  { src: "/logos/deejos.png", alt: "Deejos", depth: 1.5, position: "top-[74%] left-[91%]", size: "w-20 md:w-24" },
+  { src: "/logos/acronimo.png", alt: "Acronimo", depth: 1, position: "top-[89%] left-[83%]", size: "w-16 md:w-20" },
+  { src: "/logos/strava.png", alt: "Strava", depth: 1.3, position: "top-[92%] left-[35%]", size: "w-16 md:w-20" },
+  { src: "/logos/tunefly.png", alt: "Tunefly", depth: 0.8, position: "top-[91%] left-[60%]", size: "w-16 md:w-20" },
+];
 
 export function Hero() {
+  const colonIndex = heroContent.headline.indexOf(":");
+  const headlineLead = colonIndex === -1 ? heroContent.headline : heroContent.headline.slice(0, colonIndex + 1);
+  const headlineRest = colonIndex === -1 ? "" : heroContent.headline.slice(colonIndex + 1).trim();
+
   return (
     <section className="relative overflow-hidden bg-navy pb-28 pt-20 md:pb-40 md:pt-28">
       <CursorGlow colorFrom="rgba(241,80,47,0.35)" colorTo="rgba(11,30,54,0)" />
 
-      <div className="relative mx-auto max-w-4xl px-6 text-center">
+      {/* Client-logo parallax, desktop only: drifts with the cursor behind the headline */}
+      <div className="pointer-events-none absolute inset-0 z-0 hidden md:block" aria-hidden="true">
+        <Floating sensitivity={-0.6} className="overflow-hidden">
+          {floatingLogos.map((logo) => (
+            <FloatingElement key={logo.alt} depth={logo.depth} className={logo.position}>
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                className={`${logo.size} h-auto object-contain opacity-70 transition-opacity hover:opacity-100`}
+              />
+            </FloatingElement>
+          ))}
+        </Floating>
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         <p className="mb-5 text-xs font-bold uppercase tracking-[0.2em] text-gold">{heroContent.eyebrow}</p>
 
         <h1 className="font-display text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
-          {heroContent.headline}
+          <span className="block">{headlineLead}</span>
+          {headlineRest && <span className="block">{headlineRest}</span>}
         </h1>
-
-        <p className="mx-auto mt-6 max-w-2xl text-base text-cream-2/90 md:text-lg">{heroContent.subheadline}</p>
 
         <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
@@ -34,41 +71,6 @@ export function Hero() {
 
         <p className="mt-6 text-xs text-cream-2/60">{heroContent.trustLine}</p>
       </div>
-
-      {/* Three float badges drifting around the hero, each on its own speed/delay so they never sync */}
-      <div className="relative mx-auto mt-16 hidden max-w-5xl px-6 md:block" aria-hidden="false">
-        <FloatBadge delay={0} duration={5.5} className="absolute left-[6%] top-0">
-          <BadgeCard {...heroContent.floatBadges[0]} />
-        </FloatBadge>
-        <FloatBadge delay={0.8} duration={4.5} className="absolute left-1/2 top-6 -translate-x-1/2">
-          <BadgeCard {...heroContent.floatBadges[1]} />
-        </FloatBadge>
-        <FloatBadge delay={1.4} duration={6} className="absolute right-[6%] top-0">
-          <BadgeCard {...heroContent.floatBadges[2]} />
-        </FloatBadge>
-      </div>
-
-      {/* Mobile: badges as a static row instead of floating over content */}
-      <div className="relative mx-auto mt-10 grid max-w-sm grid-cols-3 gap-3 px-6 md:hidden">
-        {heroContent.floatBadges.map((badge) => (
-          <div key={badge.label} className="rounded-xl bg-white/10 px-2 py-3 text-center backdrop-blur">
-            <span className="block font-display text-lg font-extrabold text-white">
-              <CounterOnScroll target={badge.number} suffix={badge.suffix} />
-            </span>
-          </div>
-        ))}
-      </div>
     </section>
-  );
-}
-
-function BadgeCard({ label, number, suffix }: { label: string; number: number; suffix: string }) {
-  return (
-    <div className="rounded-2xl border border-white/15 bg-white/10 px-5 py-3 shadow-lg backdrop-blur">
-      <p className="whitespace-nowrap font-display text-lg font-extrabold text-white">
-        <CounterOnScroll target={number} suffix={suffix} />
-      </p>
-      <p className="whitespace-nowrap text-[11px] font-medium text-cream-2/80">{label.replace(/^\d+\+?\s*/, "")}</p>
-    </div>
   );
 }

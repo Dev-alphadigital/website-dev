@@ -5,21 +5,9 @@
 export const heroContent = {
   eyebrow: "Full-Service Digital Marketing Agency",
   headline: "A Digital Marketing Agency Built Around One Goal: More of the Right Customers",
-  subheadline:
-    "Alpha Digital plans and runs SEO, PPC, branding, and AI automation strategies that bring qualified traffic to your website and turn it into real leads.",
   primaryCta: { label: "Get My Free Marketing Audit", href: "#lead-form" },
   secondaryCta: { label: "See Our Work", href: "/portfolio/" },
   trustLine: "70+ clients served across retail, finance, healthcare, and tech.",
-  floatBadges: [
-    { label: "5+ Years of Experience", number: 5, suffix: "+" },
-    { label: "70+ Satisfied Clients", number: 70, suffix: "+" },
-    { label: "100+ Successful Projects", number: 100, suffix: "+" },
-  ],
-};
-
-export const trustBarContent = {
-  label: "Trusted by growing brands in retail, finance, healthcare, and tech",
-  logos: ["Inktel", "Gallo", "Acrónimo Spirits", "Hakem.ai", "Sensible Driver", "MossyLand LLC", "Debt Compliance Services"],
 };
 
 export const whyUsContent = {

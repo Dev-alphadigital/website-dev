@@ -1,6 +1,5 @@
 import { Header } from "@/components/sections/header";
 import { Hero } from "@/components/sections/hero";
-import { TrustBar } from "@/components/sections/trust-bar";
 import { WhyUs } from "@/components/sections/why-us";
 import { Services } from "@/components/sections/services";
 import { LeadForm } from "@/components/sections/lead-form";
@@ -21,7 +20,6 @@ export default function Home() {
     <main>
       <Header />
       <Hero />
-      <TrustBar />
       <WhyUs />
       <Services />
       <LeadForm />
