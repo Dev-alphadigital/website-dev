@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   motion,
@@ -14,6 +15,8 @@ export type ParallaxProject = {
   title: string;
   category: string;
   href: string;
+  /** Optional case-study screenshot. Falls back to a brand-gradient placeholder when omitted. */
+  image?: string;
 };
 
 const CARD_GRADIENTS = [
@@ -126,13 +129,25 @@ export const ProductCard = ({
     >
       <Link
         href={product.href}
-        className={`block h-full w-full overflow-hidden rounded-2xl bg-gradient-to-br shadow-xl transition group-hover/product:shadow-2xl ${gradient}`}
+        className={`block h-full w-full overflow-hidden rounded-2xl shadow-xl transition group-hover/product:shadow-2xl ${
+          product.image ? "relative bg-navy" : `bg-gradient-to-br ${gradient}`
+        }`}
       >
-        <div className="flex h-full w-full items-center justify-center p-6">
-          <span className="select-none text-center font-display text-3xl font-extrabold text-white/10 md:text-5xl">
-            {product.title}
-          </span>
-        </div>
+        {product.image ? (
+          <Image
+            src={product.image}
+            alt={product.title}
+            fill
+            sizes="(min-width: 768px) 26rem, 16rem"
+            className="object-cover"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center p-6">
+            <span className="select-none text-center font-display text-3xl font-extrabold text-white/10 md:text-5xl">
+              {product.title}
+            </span>
+          </div>
+        )}
       </Link>
       <div className="pointer-events-none absolute inset-0 flex flex-col justify-end rounded-2xl bg-navy/85 p-5 opacity-0 transition-opacity duration-300 group-hover/product:opacity-100">
         <span className="text-[11px] font-bold uppercase tracking-widest text-signal">
