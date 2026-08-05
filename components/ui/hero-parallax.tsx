@@ -1,15 +1,8 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  MotionValue,
-} from "framer-motion";
+import { motion } from "framer-motion";
 
 export type ParallaxProject = {
   title: string;
@@ -25,107 +18,49 @@ const CARD_GRADIENTS = [
   "from-gold via-navy to-navy",
   "from-navy via-signal to-navy",
   "from-navy via-gold to-navy",
+  "from-signal via-gold to-navy",
 ];
 
-// Adapted from Aceternity's hero-parallax block. The upstream version renders
-// a fixed 5/5/5 product grid backed by real screenshot thumbnails; Alpha
-// Digital's portfolio doesn't have case-study screenshots yet, so cards use
-// brand-gradient placeholders and rows are split dynamically to fit however
-// many projects are passed in.
+// Adapted from Aceternity's hero-parallax block. The upstream version is a
+// horizontally-scrolling, scroll-linked showcase that needs an artificially
+// tall wrapper (multiple viewport heights) to give its pin/tilt animation
+// scroll room to run — that wrapper height never matches the actual content
+// height, which is what left dead space before whatever follows the section.
+// This version keeps the tilt/fade-in feel but triggers it per-card via
+// whileInView as the grid scrolls into view, so the section is exactly as
+// tall as its content: a real 3-column CSS grid, no scroll-linked track.
 export const HeroParallax = ({ products }: { products: ParallaxProject[] }) => {
-  const rows: ParallaxProject[][] = [];
-  for (let i = 0; i < products.length; i += 5) {
-    rows.push(products.slice(i, i + 5));
-  }
-
-  const ref = React.useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-
-  const springConfig = { stiffness: 300, damping: 30, bounce: 100 };
-
-  const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 1000]),
-    springConfig
-  );
-  const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -1000]),
-    springConfig
-  );
-  const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
-    springConfig
-  );
-  const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
-    springConfig
-  );
-  const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
-    springConfig
-  );
-  const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
-    springConfig
-  );
-
-  // Scroll runway scales with row count so the tilt-in effect has room to
-  // play out whether there are 3 projects or 15.
-  const sectionHeight = `${100 + rows.length * 60}vh`;
-
   return (
-    <div
-      ref={ref}
-      style={{ height: sectionHeight }}
-      className="relative flex flex-col self-auto overflow-hidden py-20 antialiased [perspective:1000px] [transform-style:preserve-3d] md:py-32"
-    >
-      <motion.div
-        style={{
-          rotateX,
-          rotateZ,
-          translateY,
-          opacity,
-        }}
-      >
-        {rows.map((row, rowIndex) => (
-          <motion.div
-            key={rowIndex}
-            className={`mb-10 flex gap-6 md:mb-16 md:gap-8 ${
-              rowIndex % 2 === 0 ? "flex-row-reverse space-x-reverse" : "flex-row"
-            }`}
-          >
-            {row.map((product, i) => (
-              <ProductCard
-                product={product}
-                translate={rowIndex % 2 === 0 ? translateX : translateXReverse}
-                gradient={CARD_GRADIENTS[(rowIndex * 5 + i) % CARD_GRADIENTS.length]}
-                key={product.title}
-              />
-            ))}
-          </motion.div>
-        ))}
-      </motion.div>
+    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-6 py-16 sm:grid-cols-2 md:py-20 lg:grid-cols-3 lg:gap-8">
+      {products.map((product, i) => (
+        <ProductCard
+          key={product.title}
+          product={product}
+          gradient={CARD_GRADIENTS[i % CARD_GRADIENTS.length]}
+          delay={(i % 3) * 0.1}
+        />
+      ))}
     </div>
   );
 };
 
 export const ProductCard = ({
   product,
-  translate,
   gradient,
+  delay,
 }: {
   product: ParallaxProject;
-  translate: MotionValue<number>;
   gradient: string;
+  delay: number;
 }) => {
   return (
     <motion.div
-      style={{ x: translate }}
-      whileHover={{ y: -20 }}
-      key={product.title}
-      className="group/product relative h-72 w-64 flex-shrink-0 md:h-96 md:w-[26rem]"
+      initial={{ opacity: 0, y: 40, rotateX: 10 }}
+      whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+      viewport={{ once: true, amount: 0.3 }}
+      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+      whileHover={{ y: -8 }}
+      className="group/product relative h-72 [perspective:1000px] [transform-style:preserve-3d] md:h-80"
     >
       <Link
         href={product.href}
@@ -138,12 +73,12 @@ export const ProductCard = ({
             src={product.image}
             alt={product.title}
             fill
-            sizes="(min-width: 768px) 26rem, 16rem"
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center p-6">
-            <span className="select-none text-center font-display text-3xl font-extrabold text-white/10 md:text-5xl">
+            <span className="select-none text-center font-display text-2xl font-extrabold text-white/10 md:text-3xl">
               {product.title}
             </span>
           </div>

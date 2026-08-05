@@ -195,6 +195,18 @@ export const portfolioContent = {
       description: "A creative agency site built to highlight growth, acquisitions, and brand work.",
       href: "#",
     },
+    {
+      name: "Hakem AI",
+      category: "AI",
+      description: "An AI-powered insurance comparison platform that turns uploaded quotes into instant summaries.",
+      href: "#",
+    },
+    {
+      name: "Your HR Toolkit",
+      category: "Web Development",
+      description: "An HR resource platform built to give small businesses easy access to ready-to-use tools.",
+      href: "#",
+    },
   ],
   cta: { label: "View Full Portfolio", href: "/portfolio/" },
 };
