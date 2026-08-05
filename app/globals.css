@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0b1e36;
+  --signal: #f1502f;
+  --gold: #c99a3e;
+  --cream: #faf6ec;
+  --cream-2: #f1eada;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--navy);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-montserrat), sans-serif;
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+/* Respect reduced motion preferences across every custom animation */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus, kept brand-colored instead of the browser default */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--signal);
+  color: white;
+}
