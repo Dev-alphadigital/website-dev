@@ -1,12 +1,15 @@
 "use client";
 
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, Loader2, Paperclip } from "lucide-react";
 import { contactContent } from "@/lib/content";
+import { useFormSubmit } from "@/hooks/use-form-submit";
 
 export function Contact() {
-  function handleSubmit(e: React.FormEvent) {
+  const { status, error, submit } = useFormSubmit("Contact Form");
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Wire this up to your form handler / CRM of choice.
+    submit(e.currentTarget);
   }
 
   return (
@@ -48,7 +51,7 @@ export function Contact() {
                     </label>
                     <select
                       id={field}
-                      name={field}
+                      name="Service"
                       className="w-full rounded-xl border border-navy/15 bg-cream px-4 py-3 text-sm text-navy outline-none transition focus:border-signal focus:ring-2 focus:ring-signal/30"
                     >
                       <option>SEO</option>
@@ -91,14 +94,37 @@ export function Contact() {
                 </div>
               );
             })}
+
+            <div className="sm:col-span-2">
+              <label htmlFor="attachments" className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-navy/60">
+                <Paperclip size={13} />
+                Attach Files (optional)
+              </label>
+              <input
+                id="attachments"
+                name="attachments"
+                type="file"
+                multiple
+                className="w-full rounded-xl border border-navy/15 bg-cream px-4 py-3 text-sm text-navy outline-none transition file:mr-3 file:rounded-full file:border-0 file:bg-signal file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-white focus:border-signal focus:ring-2 focus:ring-signal/30"
+              />
+            </div>
           </div>
 
           <button
             type="submit"
-            className="mt-6 w-full rounded-full bg-signal px-8 py-4 text-sm font-bold text-white transition hover:bg-navy"
+            disabled={status === "submitting"}
+            className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-signal px-8 py-4 text-sm font-bold text-white transition hover:bg-navy disabled:opacity-60"
           >
-            {contactContent.cta.label}
+            {status === "submitting" && <Loader2 size={16} className="animate-spin" />}
+            {status === "submitting" ? "Sending..." : contactContent.cta.label}
           </button>
+
+          {status === "success" && (
+            <p className="mt-4 text-center text-sm font-semibold text-signal">
+              Thanks! We&rsquo;ve received your message and will follow up soon.
+            </p>
+          )}
+          {status === "error" && <p className="mt-4 text-center text-sm font-semibold text-signal">{error}</p>}
         </form>
       </div>
     </section>
