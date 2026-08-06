@@ -1,8 +1,15 @@
 import { whyUsContent } from "@/lib/content";
 import { CounterOnScroll } from "@/components/shared/counter-on-scroll";
-import { HoverCard } from "@/components/shared/hover-card";
+import { FeatureShaderCards, type ShaderFeature } from "@/components/ui/feature-shader-cards";
+
+const featureIcons: ShaderFeature["icon"][] = ["fileBarChart", "search", "trendingUp", "users"];
 
 export function WhyUs() {
+  const features = whyUsContent.features.map((feature, index) => ({
+    ...feature,
+    icon: featureIcons[index % featureIcons.length],
+  }));
+
   return (
     <section className="bg-cream py-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -23,14 +30,8 @@ export function WhyUs() {
           ))}
         </div>
 
-        <div className="mt-16 grid gap-6 sm:grid-cols-2">
-          {whyUsContent.features.map((feature) => (
-            <HoverCard key={feature.title} className="rounded-2xl border border-navy/10 bg-white p-7">
-              <div className="mb-4 h-10 w-10 rounded-full bg-signal/10 transition group-hover:bg-signal/20" />
-              <h3 className="font-display text-lg font-bold text-navy">{feature.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-neutral-600">{feature.body}</p>
-            </HoverCard>
-          ))}
+        <div className="mt-16">
+          <FeatureShaderCards features={features} />
         </div>
       </div>
     </section>
