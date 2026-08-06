@@ -1,12 +1,26 @@
 import Link from "next/link";
-import { ShoppingBag, Building2, Truck, Scale, ShieldCheck, HeartPulse } from "lucide-react";
 import { industriesContent } from "@/lib/content";
-import { FeatureCard } from "@/components/ui/grid-feature-cards";
+import { FeatureCarousel, type CarouselFeature } from "@/components/ui/feature-carousel";
 import { ScrollReveal } from "@/components/shared/scroll-reveal";
 
-const industryIcons = [ShoppingBag, Building2, Truck, Scale, ShieldCheck, HeartPulse];
+const industryIconKeys: CarouselFeature["icon"][] = [
+  "shoppingBag",
+  "building",
+  "truck",
+  "scale",
+  "shieldCheck",
+  "heartPulse",
+];
 
 export function Industries() {
+  const features: CarouselFeature[] = industriesContent.industries.map((industry, index) => ({
+    id: industry.name.toLowerCase().replace(/\s+/g, "-"),
+    label: industry.name,
+    description: industry.description,
+    icon: industryIconKeys[index % industryIconKeys.length],
+    href: industry.href,
+  }));
+
   return (
     <section className="bg-cream-2 py-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -16,24 +30,9 @@ export function Industries() {
           <p className="mt-4 text-base text-neutral-600 md:text-lg">{industriesContent.subheadline}</p>
         </ScrollReveal>
 
-        {/* 3x2 grid, reusing the What We Do card treatment for visual consistency */}
-        <ScrollReveal
-          delay={0.3}
-          className="mt-14 grid grid-cols-1 divide-x divide-y divide-dashed divide-navy/15 border border-dashed border-navy/15 bg-white sm:grid-cols-2 lg:grid-cols-3"
-        >
-          {industriesContent.industries.map((industry, index) => (
-            <Link key={industry.name} href={industry.href} className="block">
-              <FeatureCard
-                feature={{
-                  title: industry.name,
-                  description: industry.description,
-                  icon: industryIcons[index % industryIcons.length],
-                  accent: index % 2 === 0 ? "navy" : "signal",
-                }}
-              />
-            </Link>
-          ))}
-        </ScrollReveal>
+        <div className="mt-14">
+          <FeatureCarousel features={features} />
+        </div>
 
         <div className="mt-12 text-center">
           <Link
