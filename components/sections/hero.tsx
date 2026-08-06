@@ -45,11 +45,12 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-        <h1 className="font-display text-4xl font-extrabold text-white sm:text-5xl md:text-6xl">
+        {/* H1 reduced 25% and emphasis line increased 25% from the site's base 4xl/5xl/6xl + 2xl/3xl/4xl scale */}
+        <h1 className="font-display text-[27px] font-extrabold text-white sm:text-[36px] md:text-[45px]">
           {heroContent.headline}
         </h1>
 
-        <EmphasisLine className="mt-3 font-display text-2xl font-extrabold text-signal sm:text-3xl md:text-4xl">
+        <EmphasisLine className="mt-3 font-display text-[30px] font-extrabold text-signal sm:text-[37.5px] md:text-[45px]">
           {heroContent.headlineEmphasis}
         </EmphasisLine>
 

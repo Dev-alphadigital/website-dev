@@ -9,8 +9,6 @@ import { Portfolio } from "@/components/sections/portfolio";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Locations } from "@/components/sections/locations";
 import { MidCta } from "@/components/sections/mid-cta";
-import { Guides } from "@/components/sections/guides";
-import { Instagram } from "@/components/sections/instagram";
 import { Faq } from "@/components/sections/faq";
 import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/sections/footer";
@@ -29,8 +27,6 @@ export default function Home() {
       <Testimonials />
       <Locations />
       <MidCta />
-      <Guides />
-      <Instagram />
       <Faq />
       <Contact />
       <Footer />

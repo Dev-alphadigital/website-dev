@@ -15,11 +15,6 @@ export const whyUsContent = {
   headline: "We Build Marketing Systems, Not One-Off Campaigns",
   subheadline:
     "You get one team covering SEO, PPC, content, AI automation, and web development, plus a clear report every month so you always know what's working and why.",
-  stats: [
-    { number: 5, suffix: "+", label: "Years of experience" },
-    { number: 70, suffix: "+", label: "Satisfied clients" },
-    { number: 100, suffix: "+", label: "Successful projects" },
-  ],
   features: [
     {
       title: "Reporting You Can Actually Read",
@@ -101,7 +96,7 @@ export const servicesContent = {
       anchorText: "email marketing services",
     },
   ],
-  cta: { label: "Get a Free Marketing Audit", href: "#lead-form" },
+  cta: { label: "View All Services", href: "#lead-form" },
 };
 
 export const leadFormContent = {
@@ -140,15 +135,36 @@ export const industriesContent = {
   headline: "Industries We Serve",
   subheadline: "The channels that work best change by industry. Here's where we've built the deepest experience.",
   industries: [
-    { name: "Retail", href: "/industries/retail" },
-    { name: "Real Estate", href: "/industries/real-estate" },
-    { name: "Logistics", href: "/industries/logistics" },
-    { name: "Law Firms", href: "/industries/law-firms" },
-    { name: "Insurance", href: "/industries/insurance" },
-    { name: "Healthcare", href: "/industries/healthcare" },
-    { name: "Enterprise", href: "/industries/enterprise" },
-    { name: "Finance", href: "/industries/finance" },
-    { name: "Advertising", href: "/industries/advertising" },
+    {
+      name: "Retail",
+      href: "/industries/retail",
+      description: "Product pages and campaigns built to turn browsers into repeat buyers.",
+    },
+    {
+      name: "Real Estate",
+      href: "/industries/real-estate",
+      description: "Local visibility and lead capture for agents, brokers, and property teams.",
+    },
+    {
+      name: "Logistics",
+      href: "/industries/logistics",
+      description: "Search and content that reaches decision-makers evaluating new providers.",
+    },
+    {
+      name: "Law Firms",
+      href: "/industries/law-firms",
+      description: "Trust-building content and local SEO for practices that compete on reputation.",
+    },
+    {
+      name: "Insurance",
+      href: "/industries/insurance",
+      description: "Clear, compliant messaging that turns quote requests into policies.",
+    },
+    {
+      name: "Healthcare",
+      href: "/industries/healthcare",
+      description: "Patient-facing content and local search built around HIPAA-aware best practices.",
+    },
   ],
   moreTile: { label: "See All Industries", href: "/industries/" },
 };
@@ -252,13 +268,6 @@ export const testimonialsContent = {
       name: "James Stayton",
       role: "Sensible Driver",
     },
-    {
-      id: 8,
-      quote:
-        "Alpha Digital automated our workflow using Zapier and connected everything to Salesforce. The system now updates client review dates on its own, and it keeps our CRM clean and accurate.",
-      name: "Brionne Moss",
-      role: "MossyLand LLC",
-    },
   ],
 };
 
@@ -289,77 +298,39 @@ export const midCtaContent = {
   cta: { label: "Get My Free Audit", href: "#lead-form" },
 };
 
-export const guidesContent = {
-  eyebrow: "Guides & Resources",
-  headline: "Straightforward Answers to Common Marketing Questions",
-  subheadline: "Practical guides on SEO, branding, and AI marketing, written to actually be useful, not just to fill space.",
-  cta: { label: "See All Guides", href: "/blog/" },
-  // Placeholder posts. Wire this up to pull the 3 most recent posts automatically, sorted by publish date.
-  posts: [
-    {
-      title: "How Long Does SEO Actually Take to Work?",
-      category: "SEO",
-      categoryHref: "/seo-services-usa",
-      readTime: "6 min read",
-      href: "/blog/how-long-does-seo-take",
-    },
-    {
-      title: "Branding Basics: What Makes a Business Memorable",
-      category: "Branding",
-      categoryHref: "/branding-services",
-      readTime: "5 min read",
-      href: "/blog/branding-basics",
-    },
-    {
-      title: "What AI Search Means for Your Website Traffic",
-      category: "AI Marketing",
-      categoryHref: "/aeo-geo-services",
-      readTime: "7 min read",
-      href: "/blog/ai-search-website-traffic",
-    },
-  ],
-};
-
-export const instagramContent = {
-  headline: "Follow Along on Instagram",
-  handle: "@AlphaDigital",
-  handleHref: "https://instagram.com/alphadigital",
-  note: "Live grid of the latest 8 posts, links out to the profile.",
-};
-
 export const faqContent = {
-  headline: "Common Questions About Working With a Digital Marketing Agency",
+  headline: "Frequently Asked Questions",
   authorNote: "Answered by Alpha Digital's strategy team.",
   faqs: [
     {
       question: "How long does SEO take to show results?",
       answer:
-        "Most businesses start seeing measurable movement within 3 to 6 months. SEO builds over time rather than overnight, but the gains tend to last much longer than paid ads once they land.",
+        "Most businesses see measurable movement in rankings and organic traffic within 3 to 6 months, with stronger compounding gains between months 6 and 12. SEO works by building trust with search engines through steady technical health, relevant content, and credible links, so results build gradually rather than appearing overnight like a paid ad click. The upside is durability: once rankings stabilize, they typically hold much longer than paid traffic, which stops the moment a campaign budget runs out. Actual timelines vary based on your site's history, competition level, and how much content and technical work is required upfront.",
     },
     {
       question: "Do I need SEO and PPC, or just one?",
       answer:
-        "It depends on your timeline. PPC brings traffic right away while SEO is still building. Most businesses run both early on, then lean more on SEO as rankings improve.",
+        "Most businesses benefit from running SEO and PPC together, especially early on. PPC delivers traffic and leads immediately, which matters while SEO is still building authority in the background, and the two channels share data: PPC keyword performance reveals which search terms actually convert, informing SEO content strategy, and vice versa. As organic rankings climb and start capturing consistent traffic, many businesses shift budget away from PPC and lean more heavily on SEO, since it costs less to sustain long-term. Whether you need both depends on your timeline, budget, and how competitive your industry is.",
     },
     {
       question: "What makes a digital marketing agency worth hiring instead of doing it in-house?",
       answer:
-        "An agency brings tools, tested processes, and a team that's already solved the problems you're about to run into. That said, it works best when the agency actually explains its strategy instead of treating it as a black box.",
+        "An agency brings tested processes, specialized tools, and a team that has already solved the problems your business is about to run into, saving the time and cost of learning through trial and error. You also get access to a full team, strategist, writer, designer, developer, instead of one in-house generalist trying to cover every channel. That said, hiring an agency only pays off when it operates transparently: the best partnerships involve the agency clearly explaining its strategy and reporting results in plain language, not treating the work as a black box you have to trust blindly.",
     },
     {
       question: "How is AI changing SEO right now?",
       answer:
-        "Search is expanding beyond the classic list of blue links. People now get answers directly from AI tools like ChatGPT and Google AI Overviews. That means content needs to be clear and well-structured enough for both people and AI systems to understand and cite.",
+        "Search is expanding beyond the classic list of blue links. People increasingly get answers directly from AI tools like ChatGPT, Google AI Overviews, and Gemini, which pull information from web content and summarize it rather than sending users to click through to a site. That shift means content needs to be structured clearly, with direct answers, defined headings, and factual accuracy, so both search engines and AI systems can understand, extract, and cite it. Businesses that adapt their content for this kind of clarity now are positioning themselves to stay visible as search traffic moves toward AI-generated answers.",
     },
     {
       question: "How much should I expect to spend on digital marketing?",
       answer:
-        "It varies a lot by industry and goals. A realistic starting range gets discussed during a free audit once we understand your current traffic, competition, and goals.",
+        "Digital marketing budgets vary widely based on your industry, competition, and goals, so there's no single number that applies to every business. A local service business targeting a small geographic area typically needs a smaller budget than a national e-commerce brand competing in a crowded market. The most reliable way to get a realistic number is a free audit, where we review your current traffic, competitors, and growth goals, then recommend a starting budget and channel mix based on what similar businesses in your space are actually spending to see results.",
     },
     {
       question: "Can a small business compete with bigger brands in search results?",
       answer:
-        "Yes, especially with SEO. Search rankings reward relevance and topical depth, not just budget size. A focused local or niche strategy can outrank a bigger competitor with a broader, less specific approach.",
+        "Yes, and SEO is one of the few marketing channels where budget size isn't the deciding factor. Search engines rank pages based on relevance and topical depth, not who spent the most money, which means a small business with a focused, specific strategy can outrank a much bigger competitor whose content is broader and less targeted. Local and niche strategies work especially well here: ranking for a specific service in a specific city is far more achievable than competing for a broad national keyword. The key is choosing focused targets instead of trying to compete everywhere at once.",
     },
   ],
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useMemo, useRef } from "react";
 import { motion } from "framer-motion";
 import DottedMap from "dotted-map";
 import { useTheme } from "next-themes";
@@ -47,6 +47,48 @@ export function WorldMap({
     const midY = Math.min(start.y, end.y) - 50;
     return `M ${start.x} ${start.y} Q ${midX} ${midY} ${end.x} ${end.y}`;
   }
+
+  // Labels render as an HTML overlay instead of SVG <text>: this SVG scales
+  // via its viewBox to fill the container, so a fixed SVG-unit font size
+  // shrinks along with everything else at mobile widths (illegible) and
+  // there's no single unit value that reads well at both a ~340px mobile
+  // container and a ~980px desktop one. HTML text sized in real px is
+  // independent of that scale. Also de-dupes by point, since multiple
+  // routes sharing an origin (e.g. every route starting from the same
+  // office) would otherwise stack identical labels directly on top of
+  // each other.
+  const labels = useMemo(() => {
+    const seen = new Map<string, { x: number; y: number; label: string }>();
+    dots.forEach((dot) => {
+      [dot.start, dot.end].forEach((point) => {
+        if (!point.label) return;
+        const { x, y } = projectPoint(point.lat, point.lng);
+        const key = `${Math.round(x)}-${Math.round(y)}`;
+        if (!seen.has(key)) {
+          seen.set(key, { x, y, label: point.label });
+        }
+      });
+    });
+
+    // Two genuinely distinct points can still project close together (e.g.
+    // Dubai and Islamabad), which stacks their labels into an unreadable
+    // overlap once every point gets a fixed-size HTML label -- worse at
+    // mobile widths where the whole map is more compressed. Default every
+    // label above its dot; when another label is within range, flip the
+    // lower (larger-y) one below its dot so the pair pulls apart instead
+    // of colliding in the middle.
+    const points = Array.from(seen.values()).map((p) => ({ ...p, anchor: "above" as "above" | "below" }));
+    for (let i = 0; i < points.length; i++) {
+      for (let j = i + 1; j < points.length; j++) {
+        const a = points[i];
+        const b = points[j];
+        if (Math.abs(a.x - b.x) < 70 && Math.abs(a.y - b.y) < 45) {
+          (a.y <= b.y ? b : a).anchor = "below";
+        }
+      }
+    }
+    return points;
+  }, [dots]);
 
   return (
     <div className="relative aspect-[2/1] w-full rounded-2xl bg-white font-sans dark:bg-black">
@@ -101,11 +143,6 @@ export function WorldMap({
                 <animate attributeName="r" from="3" to="10" dur="1.5s" begin="0s" repeatCount="indefinite" />
                 <animate attributeName="opacity" from="0.5" to="0" dur="1.5s" begin="0s" repeatCount="indefinite" />
               </circle>
-              {showLabels && dot.start.label && (
-                <text x={projectPoint(dot.start.lat, dot.start.lng).x} y={projectPoint(dot.start.lat, dot.start.lng).y - 10} textAnchor="middle" className="fill-navy text-[8px] font-semibold dark:fill-white">
-                  {dot.start.label}
-                </text>
-              )}
             </g>
             <g>
               <circle cx={projectPoint(dot.end.lat, dot.end.lng).x} cy={projectPoint(dot.end.lat, dot.end.lng).y} r="3" fill={lineColor} />
@@ -113,15 +150,26 @@ export function WorldMap({
                 <animate attributeName="r" from="3" to="10" dur="1.5s" begin="0s" repeatCount="indefinite" />
                 <animate attributeName="opacity" from="0.5" to="0" dur="1.5s" begin="0s" repeatCount="indefinite" />
               </circle>
-              {showLabels && dot.end.label && (
-                <text x={projectPoint(dot.end.lat, dot.end.lng).x} y={projectPoint(dot.end.lat, dot.end.lng).y - 10} textAnchor="middle" className="fill-navy text-[8px] font-semibold dark:fill-white">
-                  {dot.end.label}
-                </text>
-              )}
             </g>
           </g>
         ))}
       </svg>
+
+      {showLabels && (
+        <div className="pointer-events-none absolute inset-0">
+          {labels.map((point) => (
+            <span
+              key={point.label}
+              className={`absolute -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-bold text-navy shadow-sm sm:text-sm dark:bg-black/80 dark:text-white ${
+                point.anchor === "above" ? "-translate-y-[calc(100%+6px)]" : "translate-y-1.5"
+              }`}
+              style={{ left: `${(point.x / 800) * 100}%`, top: `${(point.y / 400) * 100}%` }}
+            >
+              {point.label}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
