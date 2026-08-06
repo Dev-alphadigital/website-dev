@@ -33,6 +33,7 @@ export function Services() {
                   title: service.name,
                   description: service.description,
                   icon: serviceIcons[index % serviceIcons.length],
+                  accent: index % 2 === 0 ? "navy" : "signal",
                 }}
               />
               <Link

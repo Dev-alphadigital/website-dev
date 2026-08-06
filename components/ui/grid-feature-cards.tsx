@@ -5,36 +5,60 @@ type FeatureType = {
   title: string;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   description: string;
+  /** Which brand color drives the icon badge and watermark tint. Defaults to navy. */
+  accent?: "navy" | "signal";
 };
 
 type FeatureCardProps = React.ComponentProps<"div"> & {
   feature: FeatureType;
 };
 
+const accentStyles = {
+  navy: {
+    badge: "bg-navy text-white",
+    wash: "from-navy/15 to-navy/[0.03]",
+    fill: "fill-navy/10 stroke-navy/30",
+  },
+  signal: {
+    badge: "bg-signal text-white",
+    wash: "from-signal/15 to-signal/[0.03]",
+    fill: "fill-signal/10 stroke-signal/30",
+  },
+};
+
 // Adapted from the original grid-feature-cards demo: it styles the watermark
 // grid pattern, icon, and body copy with shadcn's foreground/muted-foreground
 // CSS-variable tokens, which this project's Tailwind config never defines
 // (it uses literal brand colors instead) -- those classes would resolve to
-// nothing. Swapped for navy/neutral equivalents so the effect actually renders.
+// nothing. Swapped for navy/signal so each card carries a real brand-color
+// icon badge and matching watermark tint instead of flat gray.
 export function FeatureCard({ feature, className, ...props }: FeatureCardProps) {
   const p = genRandomPattern();
+  const accent = accentStyles[feature.accent ?? "navy"];
 
   return (
     <div className={cn("relative overflow-hidden p-6", className)} {...props}>
       <div className="pointer-events-none absolute top-0 left-1/2 -mt-2 -ml-20 h-full w-full [mask-image:linear-gradient(white,transparent)]">
-        <div className="absolute inset-0 bg-gradient-to-r from-navy/5 to-navy/[0.02] [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] opacity-100">
+        <div
+          className={cn(
+            "absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] opacity-100",
+            accent.wash
+          )}
+        >
           <GridPattern
             width={20}
             height={20}
             x="-12"
             y="4"
             squares={p}
-            className="absolute inset-0 h-full w-full fill-navy/5 stroke-navy/20 mix-blend-overlay"
+            className={cn("absolute inset-0 h-full w-full mix-blend-overlay", accent.fill)}
           />
         </div>
       </div>
-      <feature.icon className="size-6 text-navy/70" strokeWidth={1} aria-hidden />
-      <h3 className="mt-10 font-display text-sm font-bold text-navy md:text-base">{feature.title}</h3>
+      <div className={cn("relative z-20 inline-flex h-11 w-11 items-center justify-center rounded-xl", accent.badge)}>
+        <feature.icon className="size-5" strokeWidth={1.75} aria-hidden />
+      </div>
+      <h3 className="relative z-20 mt-8 font-display text-sm font-bold text-navy md:text-base">{feature.title}</h3>
       <p className="relative z-20 mt-2 text-xs font-light leading-relaxed text-neutral-600">{feature.description}</p>
     </div>
   );
