@@ -4,7 +4,8 @@
 
 export const heroContent = {
   eyebrow: "Full-Service Digital Marketing Agency",
-  headline: "A Digital Marketing Agency Built Around One Goal: More of the Right Customers",
+  headline: "A Digital Marketing Agency Built Around One Goal",
+  headlineEmphasis: "More of the Right Customers",
   primaryCta: { label: "Get My Free Marketing Audit", href: "#lead-form" },
   secondaryCta: { label: "See Our Work", href: "/portfolio/" },
   trustLine: "70+ clients served across retail, finance, healthcare, and tech.",
