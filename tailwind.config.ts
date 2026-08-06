@@ -44,6 +44,10 @@ const config: Config = {
           "0%": { transform: "scaleX(0)" },
           "100%": { transform: "scaleX(1)" },
         },
+        "reveal-in": {
+          "0%": { opacity: "0", transform: "translateY(-8px)", filter: "blur(4px)" },
+          "100%": { opacity: "1", transform: "translateY(0)", filter: "blur(0px)" },
+        },
       },
       animation: {
         float: "float 5s ease-in-out infinite",
@@ -52,6 +56,7 @@ const config: Config = {
         orbit: "orbit 22s linear infinite",
         "emphasis-in": "emphasis-in 0.6s cubic-bezier(0.16,1,0.3,1) 0.35s both",
         "underline-in": "underline-in 0.5s cubic-bezier(0.16,1,0.3,1) 0.9s both",
+        "reveal-in": "reveal-in 0.8s ease-out both",
       },
     },
   },
