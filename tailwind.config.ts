@@ -68,6 +68,11 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(-8px)", filter: "blur(4px)" },
           "100%": { opacity: "1", transform: "translateY(0)", filter: "blur(0px)" },
         },
+        blob: {
+          "0%, 100%": { transform: "translate(0, 0) scale(1)" },
+          "33%": { transform: "translate(6%, -8%) scale(1.12)" },
+          "66%": { transform: "translate(-5%, 5%) scale(0.92)" },
+        },
       },
       animation: {
         float: "float 5s ease-in-out infinite",
@@ -77,6 +82,8 @@ const config: Config = {
         "emphasis-in": "emphasis-in 0.6s cubic-bezier(0.16,1,0.3,1) 0.35s both",
         "underline-in": "underline-in 0.5s cubic-bezier(0.16,1,0.3,1) 0.9s both",
         "reveal-in": "reveal-in 0.8s ease-out both",
+        blob: "blob 24s ease-in-out infinite",
+        "blob-slow": "blob 30s ease-in-out infinite",
       },
     },
   },

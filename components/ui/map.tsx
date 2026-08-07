@@ -127,11 +127,15 @@ export function WorldMap({
         })}
 
         <defs>
-          <linearGradient id="path-gradient" x1="0%" y1="0%" x2="80%" y2="0%">
+          {/* Fades in at the origin only, then stays fully opaque through to
+              the destination dot. Fading out at both ends (the original
+              95%-100% stop) left the last stretch of every curve nearly
+              transparent, so the line visually stopped short of the dot it
+              was supposed to connect to instead of reaching it. */}
+          <linearGradient id="path-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="white" stopOpacity="0" />
-            <stop offset="5%" stopColor={lineColor} stopOpacity="1" />
-            <stop offset="95%" stopColor={lineColor} stopOpacity="1" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
+            <stop offset="8%" stopColor={lineColor} stopOpacity="1" />
+            <stop offset="100%" stopColor={lineColor} stopOpacity="1" />
           </linearGradient>
         </defs>
 
@@ -160,7 +164,7 @@ export function WorldMap({
           {labels.map((point) => (
             <span
               key={point.label}
-              className={`absolute -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 px-2 py-0.5 text-[11px] font-bold text-navy shadow-sm sm:text-sm dark:bg-black/80 dark:text-white ${
+              className={`absolute -translate-x-1/2 whitespace-nowrap rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-medium text-navy shadow-sm sm:text-[12px] dark:bg-black/80 dark:text-white ${
                 point.anchor === "above" ? "-translate-y-[calc(100%+6px)]" : "translate-y-1.5"
               }`}
               style={{ left: `${(point.x / 800) * 100}%`, top: `${(point.y / 400) * 100}%` }}

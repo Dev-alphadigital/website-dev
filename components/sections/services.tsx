@@ -4,12 +4,14 @@ import { servicesContent } from "@/lib/content";
 import { FeatureCard } from "@/components/ui/grid-feature-cards";
 import { ServiceCard } from "@/components/ui/service-card";
 import { ScrollReveal } from "@/components/shared/scroll-reveal";
+import { AmbientBlobs } from "@/components/shared/ambient-blobs";
 
 const serviceIcons = [Search, Sparkles, Code2, Rocket, Cpu, Palette, Target, Share2, Mail];
 
 export function Services() {
   return (
     <section id="services" className="relative overflow-hidden bg-cream-2 py-24">
+      <AmbientBlobs />
       {/* Faint OrbitIcon-style background chips, desktop only, low opacity so they never compete with the cards */}
       <div className="pointer-events-none absolute inset-0 hidden opacity-[0.06] md:block" aria-hidden="true">
         <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 animate-orbit rounded-full border-2 border-dashed border-navy" />
