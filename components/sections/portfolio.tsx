@@ -13,8 +13,8 @@ export function Portfolio() {
     <section id="portfolio" className="overflow-hidden bg-navy">
       <div className="mx-auto max-w-2xl px-6 pt-24 text-center">
         <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gold">{portfolioContent.eyebrow}</p>
-        <h2 className="font-display text-3xl font-extrabold text-white md:text-5xl">{portfolioContent.headline}</h2>
-        <p className="mt-4 text-base text-cream-2/80 md:text-lg">{portfolioContent.subheadline}</p>
+        <h2 className="font-display text-h2-sm font-extrabold text-white md:text-h2">{portfolioContent.headline}</h2>
+        <p className="mt-4 font-body text-body text-cream-2/80">{portfolioContent.subheadline}</p>
       </div>
 
       <HeroParallax products={projects} />

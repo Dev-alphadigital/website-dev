@@ -14,8 +14,8 @@ interface CursorGlowProps {
 // Confined to its parent (must be `relative`), not the whole viewport.
 export function CursorGlow({
   className = "",
-  colorFrom = "rgba(241,80,47,0.25)",
-  colorTo = "rgba(11,30,54,0)",
+  colorFrom = "rgba(251,61,0,0.25)",
+  colorTo = "rgba(4,33,51,0)",
   size = 480,
 }: CursorGlowProps) {
   const containerRef = useRef<HTMLDivElement>(null);

@@ -63,8 +63,8 @@ export function FeatureCard({ feature, className, ...props }: FeatureCardProps) 
       >
         <feature.icon className="size-5" strokeWidth={1.75} aria-hidden />
       </div>
-      <h3 className="relative z-20 mt-8 font-display text-sm font-bold text-navy md:text-base">{feature.title}</h3>
-      <p className="relative z-20 mt-2 text-xs font-light leading-relaxed text-neutral-600">{feature.description}</p>
+      <h3 className="relative z-20 mt-8 font-display text-h3-card font-bold text-navy">{feature.title}</h3>
+      <p className="relative z-20 mt-2 font-body text-body-card font-light leading-relaxed text-neutral-600">{feature.description}</p>
     </div>
   );
 }

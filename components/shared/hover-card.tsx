@@ -13,7 +13,7 @@ interface HoverCardProps {
 export function HoverCard({ children, className = "" }: HoverCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -6, boxShadow: "0 20px 40px -12px rgba(11,30,54,0.18)" }}
+      whileHover={{ y: -6, boxShadow: "0 20px 40px -12px rgba(4,33,51,0.18)" }}
       whileTap={{ y: -3 }}
       transition={{ duration: 0.25, ease: "easeOut" }}
       className={`group ${className}`}

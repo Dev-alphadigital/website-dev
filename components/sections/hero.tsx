@@ -27,7 +27,7 @@ const floatingLogos: { src: string; alt: string; depth: number; position: string
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-navy pb-28 pt-20 md:pb-40 md:pt-28">
-      <CursorGlow colorFrom="rgba(241,80,47,0.35)" colorTo="rgba(11,30,54,0)" />
+      <CursorGlow colorFrom="rgba(251,61,0,0.35)" colorTo="rgba(4,33,51,0)" />
 
       {/* Client-logo parallax, desktop only: drifts with the cursor behind the headline */}
       <div className="pointer-events-none absolute inset-0 z-0 hidden md:block" aria-hidden="true">
@@ -45,12 +45,12 @@ export function Hero() {
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-        {/* H1 reduced 25% and emphasis line increased 25% from the site's base 4xl/5xl/6xl + 2xl/3xl/4xl scale */}
-        <h1 className="font-display text-[27px] font-extrabold text-white sm:text-[36px] md:text-[45px]">
+        {/* Brand H1 scale: 55px on desktop, scaled down proportionally below md */}
+        <h1 className="font-display text-[33px] font-extrabold text-white sm:text-[44px] md:text-h1">
           {heroContent.headline}
         </h1>
 
-        <EmphasisLine className="mt-3 font-display text-[30px] font-extrabold text-signal sm:text-[37.5px] md:text-[45px]">
+        <EmphasisLine className="mt-3 font-display text-[33px] font-extrabold text-signal sm:text-[44px] md:text-h1">
           {heroContent.headlineEmphasis}
         </EmphasisLine>
 
@@ -69,7 +69,7 @@ export function Hero() {
           </a>
         </div>
 
-        <p className="mt-6 text-xs text-cream-2/60">{heroContent.trustLine}</p>
+        <p className="mt-6 font-body text-hero-sm text-cream-2/60">{heroContent.trustLine}</p>
       </div>
     </section>
   );

@@ -8,7 +8,7 @@ export function Testimonials() {
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div className="text-center lg:text-left">
             <p className="mb-3 text-xs font-bold uppercase tracking-widest text-gold">{testimonialsContent.eyebrow}</p>
-            <h2 className="font-display text-3xl font-extrabold text-white md:text-5xl">{testimonialsContent.headline}</h2>
+            <h2 className="font-display text-h2-sm font-extrabold text-white md:text-h2">{testimonialsContent.headline}</h2>
           </div>
 
           <div className="px-6 pb-10 lg:px-0 lg:pb-0">

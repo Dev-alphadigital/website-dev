@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 :root {
-  --navy: #0b1e36;
-  --signal: #f1502f;
-  --gold: #c99a3e;
+  --navy: #042133;
+  --signal: #fb3d00;
+  --gold: #ffb83b;
+  --blue-sub: #163c54;
   --cream: #faf6ec;
   --cream-2: #f1eada;
 }
@@ -20,7 +21,7 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-inter), sans-serif;
   line-height: 1.05;
   font-weight: 800;
 }

@@ -18,8 +18,8 @@ export function LeadForm() {
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div className="text-center lg:text-left">
-            <h2 className="font-display text-3xl font-extrabold text-white md:text-4xl">{leadFormContent.headline}</h2>
-            <p className="mt-4 text-base text-cream-2/80">{leadFormContent.subheadline}</p>
+            <h2 className="font-display text-h2-sm font-extrabold text-white md:text-h2">{leadFormContent.headline}</h2>
+            <p className="mt-4 font-body text-body text-cream-2/80">{leadFormContent.subheadline}</p>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 lg:justify-start">
               {leadFormContent.microTrust.map((line, i) => (

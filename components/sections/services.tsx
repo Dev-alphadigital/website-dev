@@ -16,10 +16,10 @@ export function Services() {
       </div>
 
       <div className="relative mx-auto max-w-6xl px-6">
-        <ScrollReveal className="mx-auto max-w-2xl text-center">
+        <ScrollReveal className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-signal">{servicesContent.eyebrow}</p>
-          <h2 className="font-display text-3xl font-extrabold text-navy md:text-5xl">{servicesContent.headline}</h2>
-          <p className="mt-4 text-base text-neutral-600 md:text-lg">{servicesContent.subheadline}</p>
+          <h2 className="font-display text-h2-sm font-extrabold text-navy md:text-h2">{servicesContent.headline}</h2>
+          <p className="mt-4 font-body text-body text-neutral-600">{servicesContent.subheadline}</p>
         </ScrollReveal>
 
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">

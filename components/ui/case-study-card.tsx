@@ -95,13 +95,13 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
                 <Icon className="h-16 w-16 text-white/20" strokeWidth={1.25} aria-hidden />
               </div>
             )}
-            <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-navy">
+            <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-h4-sm font-bold uppercase tracking-wide text-navy">
               {study.industry}
             </span>
           </div>
           <div className="flex flex-1 flex-col p-6">
-            <h3 className="font-display text-xl font-bold text-navy">{study.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-neutral-500">{study.description}</p>
+            <h3 className="font-display text-h3-card font-bold text-navy">{study.title}</h3>
+            <p className="mt-2 font-body text-body-card leading-relaxed text-neutral-500">{study.description}</p>
             <div className="mt-auto flex items-center gap-1.5 pt-4 text-xs font-bold uppercase tracking-widest text-signal">
               See what&apos;s inside
               <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden />
@@ -112,11 +112,11 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
         {/* Back */}
         <div className="absolute inset-0 flex flex-col justify-between rounded-2xl bg-navy p-6 [backface-visibility:hidden] [transform:rotateY(180deg)]">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-widest text-gold">{study.industry} &middot; SEO</span>
-            <h3 className="mt-2 font-display text-lg font-bold text-white">{study.title}</h3>
+            <span className="text-h4-sm font-bold uppercase tracking-widest text-gold">{study.industry} &middot; SEO</span>
+            <h3 className="mt-2 font-display text-h3-card font-bold text-white">{study.title}</h3>
             <ul className="mt-4 space-y-2.5">
               {study.highlights.map((highlight) => (
-                <li key={highlight} className="flex items-start gap-2 text-sm text-cream-2/90">
+                <li key={highlight} className="flex items-start gap-2 font-body text-body-card text-cream-2/90">
                   <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-signal" aria-hidden />
                   {highlight}
                 </li>

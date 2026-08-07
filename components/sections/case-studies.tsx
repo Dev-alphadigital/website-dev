@@ -7,8 +7,8 @@ export function CaseStudies() {
     <section id="case-studies" className="bg-cream py-24">
       <div className="mx-auto max-w-2xl px-6 text-center">
         <p className="mb-3 text-xs font-bold uppercase tracking-widest text-signal">{caseStudiesContent.eyebrow}</p>
-        <h2 className="font-display text-3xl font-extrabold text-navy md:text-5xl">{caseStudiesContent.headline}</h2>
-        <p className="mt-4 text-base text-neutral-500 md:text-lg">{caseStudiesContent.subheadline}</p>
+        <h2 className="font-display text-h2-sm font-extrabold text-navy md:text-h2">{caseStudiesContent.headline}</h2>
+        <p className="mt-4 font-body text-body text-neutral-500">{caseStudiesContent.subheadline}</p>
       </div>
 
       <div className="mx-auto mt-14 grid max-w-4xl gap-8 px-6 md:grid-cols-2">

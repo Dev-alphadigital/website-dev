@@ -19,7 +19,7 @@ interface MapProps {
 
 export function WorldMap({
   dots = [],
-  lineColor = "#F1502F",
+  lineColor = "#FB3D00",
   showLabels = true,
   animationDuration = 2,
   loop = true,

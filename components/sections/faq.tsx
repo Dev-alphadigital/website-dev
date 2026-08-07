@@ -21,7 +21,7 @@ export function Faq() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
       <div className="mx-auto max-w-3xl px-6">
-        <h2 className="text-center font-display text-3xl font-extrabold text-navy md:text-4xl">
+        <h2 className="text-center font-display text-h2-sm font-extrabold text-navy md:text-h2">
           {faqContent.headline}
         </h2>
         <p className="mt-3 text-center text-sm font-medium text-neutral-500">{faqContent.authorNote}</p>

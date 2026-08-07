@@ -62,7 +62,7 @@ export function TestimonialCard({ handleShuffle, onDragActive, testimonial, posi
       >
         {initials(name)}
       </div>
-      <span className="text-center text-base italic leading-relaxed text-navy/80">&ldquo;{testimonial}&rdquo;</span>
+      <span className="text-center font-body text-body-card italic leading-relaxed text-navy/80">&ldquo;{testimonial}&rdquo;</span>
       <div className="text-center">
         <span className="block text-sm font-bold text-navy">{name}</span>
         <span className="block text-xs text-signal">{role}</span>

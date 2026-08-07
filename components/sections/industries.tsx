@@ -26,8 +26,8 @@ export function Industries() {
       <div className="mx-auto max-w-6xl px-6">
         <ScrollReveal className="mx-auto max-w-2xl text-center">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-signal">{industriesContent.eyebrow}</p>
-          <h2 className="font-display text-3xl font-extrabold text-navy md:text-5xl">{industriesContent.headline}</h2>
-          <p className="mt-4 text-base text-neutral-600 md:text-lg">{industriesContent.subheadline}</p>
+          <h2 className="font-display text-h2-sm font-extrabold text-navy md:text-h2">{industriesContent.headline}</h2>
+          <p className="mt-4 font-body text-body text-neutral-600">{industriesContent.subheadline}</p>
         </ScrollReveal>
 
         <div className="mt-14">

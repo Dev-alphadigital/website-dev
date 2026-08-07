@@ -9,15 +9,35 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: "#0B1E36",
-        signal: "#F1502F",
-        gold: "#C99A3E",
+        // Brand guide: Main (navy/signal) + Sub (blue-sub/gold) palettes.
+        navy: "#042133",
+        signal: "#FB3D00",
+        gold: "#FFB83B",
+        "blue-sub": "#163C54",
         cream: "#FAF6EC",
         "cream-2": "#F1EADA",
       },
       fontFamily: {
-        display: ["var(--font-montserrat)", "sans-serif"],
-        body: ["var(--font-inter)", "sans-serif"],
+        // Brand guide: Inter for headings, Montserrat for text & buttons.
+        display: ["var(--font-inter)", "sans-serif"],
+        body: ["var(--font-montserrat)", "sans-serif"],
+      },
+      fontSize: {
+        // Brand type scale (desktop pixel sizes from the brand guide).
+        h1: ["55px", { lineHeight: "1.05" }],
+        h2: ["45px", { lineHeight: "1.1" }],
+        "h2-sm": ["35px", { lineHeight: "1.15" }],
+        h3: ["25px", { lineHeight: "1.25" }],
+        "h3-card": ["20px", { lineHeight: "1.3" }],
+        h4: ["15px", { lineHeight: "1.4" }],
+        "h4-sm": ["12px", { lineHeight: "1.4" }],
+        body: ["17px", { lineHeight: "1.6" }],
+        "body-card": ["16px", { lineHeight: "1.6" }],
+        "body-sm": ["15px", { lineHeight: "1.6" }],
+        hero: ["20px", { lineHeight: "1.5" }],
+        "hero-sm": ["18px", { lineHeight: "1.5" }],
+        btn: ["15px", { lineHeight: "1" }],
+        "btn-sm": ["14px", { lineHeight: "1" }],
       },
       keyframes: {
         float: {

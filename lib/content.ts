@@ -10,45 +10,20 @@ export const heroContent = {
   trustLine: "70+ clients served across retail, finance, healthcare, and tech.",
 };
 
-export const whyUsContent = {
-  eyebrow: "Why Alpha Digital",
-  headline: "We Build Marketing Systems, Not One-Off Campaigns",
-  subheadline:
-    "You get one team covering SEO, PPC, content, AI automation, and web development, plus a clear report every month so you always know what's working and why.",
-  features: [
-    {
-      title: "Reporting You Can Actually Read",
-      body: "Every client gets a plain-language report each month. No jargon, just what changed and what we're doing next.",
-    },
-    {
-      title: "Keyword and Search Insight",
-      body: "We study what your customers are actually typing into Google, then build content and pages around it.",
-    },
-    {
-      title: "Search Visibility That Compounds",
-      body: "SEO gains build on each other. We focus on rankings that hold steady, not quick spikes that fade.",
-    },
-    {
-      title: "One Team, Every Channel",
-      body: "SEO, PPC, branding, and web development work off the same strategy instead of four disconnected vendors.",
-    },
-  ],
-};
-
 export const servicesContent = {
   eyebrow: "What We Do",
   headline: "Marketing Services Built to Work Together",
   subheadline:
-    "Pick one service or combine a few. Each one is built to support the others instead of working in isolation.",
+    "Pick one service or combine a few, since each one works with the others instead of running in isolation. Our SEO team shares keyword data with the people writing your ads. Developers build pages around what is already converting. One strategist tracks all of it, so nothing gets duplicated or falls through the cracks, and every channel points at the same goal: more of the right customers finding and choosing you.",
   services: [
     {
-      name: "SEO Services",
+      name: "SEO",
       description: "Rank higher in search and turn that visibility into steady, repeatable traffic.",
       href: "/seo-services-usa",
       anchorText: "SEO services",
     },
     {
-      name: "AI SEO & GEO Services",
+      name: "AI SEO & GEO",
       description: "Show up when people search using AI tools like ChatGPT, Gemini, and AI Overviews.",
       href: "/aeo-geo-services",
       anchorText: "AI search optimization",
@@ -72,13 +47,13 @@ export const servicesContent = {
       anchorText: "AI automation services",
     },
     {
-      name: "Branding Services",
+      name: "Branding",
       description: "Build a look and voice that people remember and trust the second time they see it.",
       href: "/branding-services",
       anchorText: "branding services",
     },
     {
-      name: "PPC Services",
+      name: "PPC",
       description: "Ad campaigns built around actual sales goals, tracked down to the dollar spent.",
       href: "/ppc-management-services",
       anchorText: "PPC management",
@@ -107,27 +82,6 @@ export const leadFormContent = {
   ctaLabel: "Get My Free Audit",
   consentLine: "By submitting this form, you agree to our Terms & Conditions.",
   microTrust: ["No spam, ever", "Response within 1 business day", "Built for businesses of any size"],
-};
-
-export const aboutContent = {
-  eyebrow: "Who We Are",
-  headline: "A Team That Treats Your Growth Like Our Own",
-  subheadline:
-    "We've worked with footwear brands, spirits companies, AI startups, and outsourcing firms. Different industries, same approach: understand how the business actually makes money, then build the marketing around that.",
-  valueTag: "Our Approach",
-  valueHeadline: "Strategy First, Tactics Second",
-  valueBody:
-    "Before we touch a single ad or blog post, we map out how your specific business gets and keeps customers. That's what decides which channels we prioritize first.",
-  cards: [
-    {
-      title: "Our Mission",
-      body: "We help businesses grow their search visibility and revenue with strategies we can actually explain and prove, not guesswork.",
-    },
-    {
-      title: "Our Vision",
-      body: "A future where small and mid-size businesses can compete for search visibility the same way big brands do, with the right strategy instead of the biggest budget.",
-    },
-  ],
 };
 
 export const industriesContent = {
@@ -286,7 +240,7 @@ export const locationsContent = {
 export const officeDots = [
   {
     start: { lat: 30.6944, lng: -88.0431, label: "Mobile, USA" },
-    end: { lat: 43.6532, lng: -79.3832, label: "Toronto, Canada" },
+    end: { lat: 43.6532, lng: -79.3832, label: "Ontario, Canada" },
   },
   {
     start: { lat: 30.6944, lng: -88.0431, label: "Mobile, USA" },
@@ -327,7 +281,7 @@ export const caseStudiesContent = {
       industry: "Enterprise & Retail",
       title: "SEO Services for Enterprises, Retail Brands",
       description:
-        "How we structure SEO for large, multi-location retail and enterprise brands -- balancing scale, governance, and consistent visibility across every market.",
+        "How we structure SEO for large, multi-location retail and enterprise brands, balancing scale, governance, and consistent visibility across every market.",
       highlights: [
         "Multi-location & multi-brand technical SEO architecture",
         "Category and product page optimization at scale",
@@ -341,8 +295,9 @@ export const caseStudiesContent = {
 };
 
 export const midCtaContent = {
-  headline: "Ready to See What's Actually Possible for Your Site?",
-  subheadline: "Get a free breakdown of your current SEO and marketing setup, no strings attached.",
+  headline: "See What's Actually Holding Your Site Back",
+  subheadline:
+    "We'll audit your SEO, page speed, and current marketing setup, then send a plain-language breakdown of what's working and what's costing you customers. No cost, no obligation.",
   cta: { label: "Get My Free Audit", href: "#lead-form" },
 };
 
@@ -387,7 +342,7 @@ export const contactContent = {
   headline: "Let's Talk About Your Marketing",
   subheadline: "Tell us a bit about your business and what you're trying to achieve. We'll follow up with next steps.",
   contactInfo: {
-    location: "8708 5650 Old Pascagoula Rd, Mobile, AL 36619",
+    location: "5650 Old Pascagoula Rd, Mobile, AL 36619",
     phone: "+1 201-778-4431",
     email: "contact.us@alphadigital.live",
   },

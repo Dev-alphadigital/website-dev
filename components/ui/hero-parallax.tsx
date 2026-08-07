@@ -152,8 +152,8 @@ export const ProductCard = ({
           isAutoActive ? "opacity-100" : "opacity-0"
         }`}
       >
-        <span className="text-[11px] font-bold uppercase tracking-widest text-signal">{product.category}</span>
-        <h3 className="mt-1 font-display text-lg font-bold text-white">{product.title}</h3>
+        <span className="text-h4-sm font-bold uppercase tracking-widest text-signal">{product.category}</span>
+        <h3 className="mt-1 font-display text-h3-card font-bold text-white">{product.title}</h3>
       </div>
     </motion.div>
   );

@@ -16,8 +16,8 @@ export function Contact() {
     <section id="contact" className="bg-cream py-24">
       <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-2">
         <div>
-          <h2 className="font-display text-3xl font-extrabold text-navy md:text-4xl">{contactContent.headline}</h2>
-          <p className="mt-4 text-base leading-relaxed text-neutral-600">{contactContent.subheadline}</p>
+          <h2 className="font-display text-h2-sm font-extrabold text-navy md:text-h2">{contactContent.headline}</h2>
+          <p className="mt-4 font-body text-body leading-relaxed text-neutral-600">{contactContent.subheadline}</p>
 
           <div className="mt-8 space-y-4">
             <div className="flex items-start gap-3">
