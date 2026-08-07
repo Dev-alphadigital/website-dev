@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag, Building2, Truck, Scale, ShieldCheck, HeartPulse, type LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -18,11 +19,9 @@ const iconMap: Record<string, LucideIcon> = {
   heartPulse: HeartPulse,
 };
 
-// Alternating brand-color panels stand in for the original demo's Unsplash
-// photography: this project doesn't have licensed photography for every
-// industry, and generic stock photos of "a gavel" / "a shopping bag" would
-// look more templated than a clean on-brand gradient with the section's own
-// icon set does.
+// Alternating brand-color panels stand in for real photography when a
+// feature doesn't have an `image` (e.g. an industry the client hasn't
+// supplied a photo for yet), so the carousel never shows a blank panel.
 const gradients = ["from-navy to-navy/70", "from-signal to-signal/70", "from-navy to-signal"];
 
 export interface CarouselFeature {
@@ -31,6 +30,7 @@ export interface CarouselFeature {
   icon: keyof typeof iconMap;
   description: string;
   href?: string;
+  image?: string;
 }
 
 const AUTO_PLAY_INTERVAL = 3000;
@@ -154,14 +154,25 @@ export function FeatureCarousel({ features }: { features: CarouselFeature[] }) {
                   transition={{ type: "spring", stiffness: 260, damping: 25, mass: 0.8 }}
                   className="absolute inset-0 origin-center overflow-hidden rounded-[2rem] border-4 border-cream bg-cream md:rounded-[2.8rem] md:border-8"
                 >
-                  <div className={cn("relative flex h-full w-full items-center justify-center bg-gradient-to-br", gradients[index % gradients.length])}>
-                    <Icon
-                      size={200}
-                      strokeWidth={1}
-                      className={cn("text-white transition-all duration-700", isActive ? "opacity-15" : "opacity-10 blur-[2px]")}
-                      aria-hidden
+                  {feature.image ? (
+                    <Image
+                      src={feature.image}
+                      alt={feature.label}
+                      fill
+                      sizes="(min-width: 1024px) 420px, 100vw"
+                      className={cn("object-cover transition-all duration-700", isActive ? "" : "blur-[2px]")}
+                      priority={index === 0}
                     />
-                  </div>
+                  ) : (
+                    <div className={cn("relative flex h-full w-full items-center justify-center bg-gradient-to-br", gradients[index % gradients.length])}>
+                      <Icon
+                        size={200}
+                        strokeWidth={1}
+                        className={cn("text-white transition-all duration-700", isActive ? "opacity-15" : "opacity-10 blur-[2px]")}
+                        aria-hidden
+                      />
+                    </div>
+                  )}
 
                   <AnimatePresence>
                     {isActive && (

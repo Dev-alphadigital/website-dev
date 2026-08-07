@@ -20,6 +20,7 @@ export function Industries() {
     description: industry.description,
     icon: industryIconKeys[index % industryIconKeys.length],
     href: industry.href,
+    image: industry.image,
   }));
 
   return (
