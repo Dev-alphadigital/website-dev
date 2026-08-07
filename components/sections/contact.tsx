@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPin, Phone, Mail, Loader2, Paperclip } from "lucide-react";
+import { MapPin, Phone, Mail, Loader2 } from "lucide-react";
 import { contactContent } from "@/lib/content";
 import { useFormSubmit } from "@/hooks/use-form-submit";
 
@@ -42,7 +42,7 @@ export function Contact() {
         <form onSubmit={handleSubmit} className="rounded-2xl border border-navy/10 bg-white p-8 shadow-sm">
           <div className="grid gap-4 sm:grid-cols-2">
             {contactContent.fields.map((field) => {
-              const isFullWidth = field === "Message" || field === "Service (dropdown)";
+              const isFullWidth = field === "Message" || field === "Service (dropdown)" || field === "Number";
               if (field === "Service (dropdown)") {
                 return (
                   <div key={field} className="sm:col-span-2">
@@ -88,26 +88,12 @@ export function Contact() {
                   <input
                     id={field}
                     name={field}
-                    type={field === "Email Address" ? "email" : field === "Phone Number" ? "tel" : "text"}
+                    type={field === "Email Address" ? "email" : field === "Number" ? "tel" : "text"}
                     className="w-full rounded-xl border border-navy/15 bg-cream px-4 py-3 text-sm text-navy outline-none transition focus:border-signal focus:ring-2 focus:ring-signal/30"
                   />
                 </div>
               );
             })}
-
-            <div className="sm:col-span-2">
-              <label htmlFor="attachments" className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-navy/60">
-                <Paperclip size={13} />
-                Attach Files (optional)
-              </label>
-              <input
-                id="attachments"
-                name="attachments"
-                type="file"
-                multiple
-                className="w-full rounded-xl border border-navy/15 bg-cream px-4 py-3 text-sm text-navy outline-none transition file:mr-3 file:rounded-full file:border-0 file:bg-signal file:px-3 file:py-1.5 file:text-xs file:font-bold file:text-white focus:border-signal focus:ring-2 focus:ring-signal/30"
-              />
-            </div>
           </div>
 
           <button

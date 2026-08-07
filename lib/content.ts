@@ -345,7 +345,7 @@ export const contactContent = {
     phone: "+1 201-778-4431",
     email: "contact.us@alphadigital.live",
   },
-  fields: ["First Name", "Last Name", "Email Address", "Phone Number", "Service (dropdown)", "Message"],
+  fields: ["Name", "Email Address", "Number", "Service (dropdown)", "Message"],
   cta: { label: "Get My Free Consultation", href: "#" },
 };
 
