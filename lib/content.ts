@@ -298,6 +298,48 @@ export const officeDots = [
   },
 ];
 
+export const caseStudiesContent = {
+  eyebrow: "Proof, Not Promises",
+  headline: "Case Studies",
+  subheadline: "Real SEO programs built for real industries. Download the playbook for the one closest to your business.",
+  studies: [
+    {
+      id: "fintech-seo",
+      icon: "landmark" as const,
+      industry: "Fintech",
+      title: "SEO Services for Fintech Businesses",
+      description:
+        "How we build compliant, high-trust SEO programs for banks, lenders, and fintech platforms competing in one of the most regulated search categories online.",
+      highlights: [
+        "Compliance-safe technical SEO audit & fixes",
+        "Content strategy built around trust & YMYL signals",
+        "Visibility for regulated financial services terms",
+        "Conversion-focused landing page recommendations",
+      ],
+      // Placeholder until the client-provided image zip is added.
+      image: undefined as string | undefined,
+      // Placeholder link -- swap for the real downloadable resource.
+      downloadHref: "#",
+    },
+    {
+      id: "enterprise-retail-seo",
+      icon: "building2" as const,
+      industry: "Enterprise & Retail",
+      title: "SEO Services for Enterprises, Retail Brands",
+      description:
+        "How we structure SEO for large, multi-location retail and enterprise brands -- balancing scale, governance, and consistent visibility across every market.",
+      highlights: [
+        "Multi-location & multi-brand technical SEO architecture",
+        "Category and product page optimization at scale",
+        "Content governance for large marketing teams",
+        "Search visibility across new & existing store locations",
+      ],
+      image: undefined as string | undefined,
+      downloadHref: "#",
+    },
+  ],
+};
+
 export const midCtaContent = {
   headline: "Ready to See What's Actually Possible for Your Site?",
   subheadline: "Get a free breakdown of your current SEO and marketing setup, no strings attached.",

@@ -8,6 +8,7 @@ import { Industries } from "@/components/sections/industries";
 import { Portfolio } from "@/components/sections/portfolio";
 import { Testimonials } from "@/components/sections/testimonials";
 import { Locations } from "@/components/sections/locations";
+import { CaseStudies } from "@/components/sections/case-studies";
 import { MidCta } from "@/components/sections/mid-cta";
 import { Faq } from "@/components/sections/faq";
 import { Contact } from "@/components/sections/contact";
@@ -26,6 +27,7 @@ export default function Home() {
       <Portfolio />
       <Testimonials />
       <Locations />
+      <CaseStudies />
       <MidCta />
       <Faq />
       <Contact />
