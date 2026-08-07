@@ -11,6 +11,7 @@ interface TestimonialCardProps {
   id: number;
   name: string;
   role: string;
+  isMobile: boolean;
 }
 
 function initials(name: string) {
@@ -22,9 +23,15 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-export function TestimonialCard({ handleShuffle, onDragActive, testimonial, position, id, name, role }: TestimonialCardProps) {
+export function TestimonialCard({ handleShuffle, onDragActive, testimonial, position, id, name, role, isMobile }: TestimonialCardProps) {
   const dragRef = React.useRef(0);
   const isFront = position === "front";
+  // Fan-out offset is a percentage of the card's own width, so it scales
+  // down automatically as the card shrinks on mobile -- but 33%/66% of
+  // even the smaller mobile card was still enough to push the middle/back
+  // cards past a narrow phone's screen edge, hence a smaller fan on mobile.
+  const middleOffset = isMobile ? "18%" : "33%";
+  const backOffset = isMobile ? "36%" : "66%";
 
   return (
     <motion.div
@@ -33,7 +40,7 @@ export function TestimonialCard({ handleShuffle, onDragActive, testimonial, posi
       }}
       animate={{
         rotate: position === "front" ? "-6deg" : position === "middle" ? "0deg" : "6deg",
-        x: position === "front" ? "0%" : position === "middle" ? "33%" : "66%",
+        x: position === "front" ? "0%" : position === "middle" ? middleOffset : backOffset,
       }}
       drag={true}
       dragElastic={0.35}
@@ -52,7 +59,7 @@ export function TestimonialCard({ handleShuffle, onDragActive, testimonial, posi
         onDragActive(false);
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[420px] w-[320px] select-none place-content-center space-y-6 rounded-2xl border-2 border-cream-2 bg-white p-7 shadow-xl md:h-[450px] md:w-[350px] ${
+      className={`absolute left-0 top-0 grid h-[360px] w-[68vw] max-w-[280px] select-none place-content-center space-y-6 rounded-2xl border-2 border-cream-2 bg-white p-7 shadow-xl sm:h-[420px] sm:w-[320px] sm:max-w-none md:h-[450px] md:w-[350px] ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
     >
@@ -81,6 +88,15 @@ export function ShuffleCards({ testimonials }: ShuffleCardsProps) {
   const [order, setOrder] = React.useState(testimonials.map((t) => t.id));
   const [hasShuffled, setHasShuffled] = React.useState(false);
   const [isPaused, setIsPaused] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   const handleShuffle = React.useCallback(() => {
     setHasShuffled(true);
@@ -105,7 +121,7 @@ export function ShuffleCards({ testimonials }: ShuffleCardsProps) {
 
   return (
     <div
-      className="relative mx-auto h-[420px] w-[320px] md:h-[450px] md:w-[350px]"
+      className="relative mx-auto h-[360px] w-[68vw] max-w-[280px] sm:h-[420px] sm:w-[320px] sm:max-w-none md:h-[450px] md:w-[350px]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -119,6 +135,7 @@ export function ShuffleCards({ testimonials }: ShuffleCardsProps) {
           position={t.position}
           handleShuffle={handleShuffle}
           onDragActive={setIsPaused}
+          isMobile={isMobile}
         />
       ))}
       {!hasShuffled && (

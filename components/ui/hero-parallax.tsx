@@ -39,6 +39,7 @@ const CARD_GRADIENTS = [
 //    (1000px / -700..500px) to suit a compact 3-wide row instead of a
 //    5-wide one spilling off both edges of the screen.
 const AUTO_HIGHLIGHT_INTERVAL = 2200;
+const MOBILE_SLIDE_INTERVAL = 2000;
 
 export const HeroParallax = ({ products }: { products: ParallaxProject[] }) => {
   const rows: ParallaxProject[][] = [];
@@ -81,7 +82,15 @@ export const HeroParallax = ({ products }: { products: ParallaxProject[] }) => {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <motion.div style={{ rotateX, rotateZ, translateY, opacity }}>
+      {/* Mobile only: single-row auto-sliding carousel instead of the
+          stacked column the scroll-parallax grid below falls back to.
+          The scroll-linked rotate/translate grid stays exactly as-is at
+          sm and up. */}
+      <div className="sm:hidden">
+        <MobileProductSlider products={products} />
+      </div>
+
+      <motion.div className="hidden sm:block" style={{ rotateX, rotateZ, translateY, opacity }}>
         {rows.map((row, rowIndex) => (
           <motion.div
             key={rowIndex}
@@ -104,6 +113,66 @@ export const HeroParallax = ({ products }: { products: ParallaxProject[] }) => {
     </div>
   );
 };
+
+function MobileProductSlider({ products }: { products: ParallaxProject[] }) {
+  const [index, setIndex] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isPaused) return;
+    const id = setInterval(() => setIndex((i) => (i + 1) % products.length), MOBILE_SLIDE_INTERVAL);
+    return () => clearInterval(id);
+  }, [isPaused, products.length]);
+
+  return (
+    <div onTouchStart={() => setIsPaused(true)} onTouchEnd={() => setIsPaused(false)}>
+      <div className="overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {products.map((product, i) => (
+            <div key={product.title} className="w-full flex-shrink-0 px-6">
+              <Link href={product.href} className="relative block h-64 w-full overflow-hidden rounded-2xl shadow-xl">
+                {product.image ? (
+                  <Image src={product.image} alt={product.title} fill sizes="100vw" className="object-cover" />
+                ) : (
+                  <div
+                    className={`flex h-full w-full items-center justify-center bg-gradient-to-br p-6 ${CARD_GRADIENTS[i % CARD_GRADIENTS.length]}`}
+                  >
+                    <span className="select-none text-center font-display text-2xl font-extrabold text-white/10">
+                      {product.title}
+                    </span>
+                  </div>
+                )}
+                {/* Bottom gradient rather than the desktop cards' full
+                    bg-navy/85 scrim: the mobile slider shows one card at a
+                    time with no hover state to make an opaque navy scrim
+                    feel temporary, and the section itself is also navy, so
+                    a full scrim made the card indistinguishable from the
+                    page background -- just blank space until the text.
+                    A bottom-only fade keeps the photo visible while still
+                    giving the title/category text a readable backing. */}
+                <div className="pointer-events-none absolute inset-0 flex flex-col justify-end rounded-2xl bg-gradient-to-t from-navy via-navy/70 to-transparent p-5">
+                  <span className="text-h4-sm font-bold uppercase tracking-widest text-signal">{product.category}</span>
+                  <h3 className="mt-1 font-display text-h3-card font-bold text-white">{product.title}</h3>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mt-5 flex justify-center gap-1.5">
+        {products.map((_, i) => (
+          <span
+            key={i}
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-5 bg-signal" : "w-1.5 bg-navy/20"}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export const ProductCard = ({
   product,

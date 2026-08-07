@@ -70,6 +70,28 @@ export function Hero() {
         </div>
 
         <p className="mt-6 font-body text-hero-sm text-cream-2/60">{heroContent.trustLine}</p>
+
+        {/* Client-logo slider, mobile only: the desktop cursor-parallax
+            above is hidden below md (no cursor to drive it), so mobile
+            gets its own single-row auto-scrolling strip instead. The list
+            is duplicated back-to-back for a seamless loop; animate-marquee
+            (32s linear infinite, already defined in tailwind.config.ts but
+            unused until now) paces out to roughly 2s per logo across the
+            17 logos. */}
+        <div className="relative mt-10 overflow-hidden md:hidden" aria-hidden="true">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-10 bg-gradient-to-r from-navy to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-10 bg-gradient-to-l from-navy to-transparent" />
+          <div className="flex w-max animate-marquee items-center gap-8">
+            {[...floatingLogos, ...floatingLogos].map((logo, i) => (
+              <img
+                key={`${logo.alt}-${i}`}
+                src={logo.src}
+                alt={logo.alt}
+                className="h-9 w-auto flex-shrink-0 object-contain opacity-70"
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

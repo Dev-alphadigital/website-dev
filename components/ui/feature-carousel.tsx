@@ -139,59 +139,72 @@ export function FeatureCarousel({ features }: { features: CarouselFeature[] }) {
               const isNext = status === "next";
               const Icon = iconMap[feature.icon];
 
+              // Rounded corners + overflow clipping live on this OUTER,
+              // never-transformed div; the actual x/scale/rotate motion is
+              // on an inner div with no border-radius of its own. Mobile
+              // browsers can glitch -- corners flashing square, then
+              // rounded, mid-transition -- when a border-radius+
+              // overflow-hidden element is *also* the one being scaled/
+              // rotated on the GPU. Splitting the clip layer from the
+              // transform layer avoids that; desktop rendered fine either
+              // way, so this is a no-visual-difference structural fix.
               return (
-                <motion.div
+                <div
                   key={feature.id}
-                  initial={false}
-                  animate={{
-                    x: isActive ? 0 : isPrev ? -100 : isNext ? 100 : 0,
-                    scale: isActive ? 1 : isPrev || isNext ? 0.85 : 0.7,
-                    opacity: isActive ? 1 : isPrev || isNext ? 0.4 : 0,
-                    rotate: isPrev ? -3 : isNext ? 3 : 0,
-                    zIndex: isActive ? 20 : isPrev || isNext ? 10 : 0,
-                    pointerEvents: isActive ? "auto" : "none",
-                  }}
-                  transition={{ type: "spring", stiffness: 260, damping: 25, mass: 0.8 }}
-                  className="absolute inset-0 origin-center overflow-hidden rounded-[2rem] border-4 border-cream bg-cream md:rounded-[2.8rem] md:border-8"
+                  style={{ zIndex: isActive ? 20 : isPrev || isNext ? 10 : 0 }}
+                  className="absolute inset-0 overflow-hidden rounded-[2rem] border-4 border-cream bg-cream md:rounded-[2.8rem] md:border-8"
                 >
-                  {feature.image ? (
-                    <Image
-                      src={feature.image}
-                      alt={feature.label}
-                      fill
-                      sizes="(min-width: 1024px) 420px, 100vw"
-                      className={cn("object-cover transition-all duration-700", isActive ? "" : "blur-[2px]")}
-                      priority={index === 0}
-                    />
-                  ) : (
-                    <div className={cn("relative flex h-full w-full items-center justify-center bg-gradient-to-br", gradients[index % gradients.length])}>
-                      <Icon
-                        size={200}
-                        strokeWidth={1}
-                        className={cn("text-white transition-all duration-700", isActive ? "opacity-15" : "opacity-10 blur-[2px]")}
-                        aria-hidden
+                  <motion.div
+                    initial={false}
+                    animate={{
+                      x: isActive ? 0 : isPrev ? -100 : isNext ? 100 : 0,
+                      scale: isActive ? 1 : isPrev || isNext ? 0.85 : 0.7,
+                      opacity: isActive ? 1 : isPrev || isNext ? 0.4 : 0,
+                      rotate: isPrev ? -3 : isNext ? 3 : 0,
+                      pointerEvents: isActive ? "auto" : "none",
+                    }}
+                    transition={{ type: "spring", stiffness: 260, damping: 25, mass: 0.8 }}
+                    className="absolute inset-0 origin-center"
+                  >
+                    {feature.image ? (
+                      <Image
+                        src={feature.image}
+                        alt={feature.label}
+                        fill
+                        sizes="(min-width: 1024px) 420px, 100vw"
+                        className={cn("object-cover transition-all duration-700", isActive ? "" : "blur-[2px]")}
+                        priority={index === 0}
                       />
-                    </div>
-                  )}
-
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/40 to-transparent p-10 pt-32"
-                      >
-                        <div className="mb-3 w-fit rounded-full border border-white/20 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-navy shadow-lg">
-                          {index + 1} &bull; {feature.label}
-                        </div>
-                        <p className="font-display text-xl font-bold leading-tight tracking-tight text-white drop-shadow-md md:text-2xl">
-                          {feature.description}
-                        </p>
-                      </motion.div>
+                    ) : (
+                      <div className={cn("relative flex h-full w-full items-center justify-center bg-gradient-to-br", gradients[index % gradients.length])}>
+                        <Icon
+                          size={200}
+                          strokeWidth={1}
+                          className={cn("text-white transition-all duration-700", isActive ? "opacity-15" : "opacity-10 blur-[2px]")}
+                          aria-hidden
+                        />
+                      </div>
                     )}
-                  </AnimatePresence>
-                </motion.div>
+
+                    <AnimatePresence>
+                      {isActive && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/40 to-transparent p-10 pt-32"
+                        >
+                          <div className="mb-3 w-fit rounded-full border border-white/20 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-navy shadow-lg">
+                            {index + 1} &bull; {feature.label}
+                          </div>
+                          <p className="font-display text-xl font-bold leading-tight tracking-tight text-white drop-shadow-md md:text-2xl">
+                            {feature.description}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </div>
               );
             })}
           </div>
