@@ -3,10 +3,22 @@ import { ArrowRight, Search, Sparkles, Code2, Rocket, Cpu, Palette, Target, Shar
 import { servicesContent } from "@/lib/content";
 import { FeatureCard } from "@/components/ui/grid-feature-cards";
 import { ServiceCard } from "@/components/ui/service-card";
+import { MobileServiceSlider, type MobileServiceSlide } from "@/components/ui/mobile-service-slider";
 import { ScrollReveal } from "@/components/shared/scroll-reveal";
 import { AmbientBlobs } from "@/components/shared/ambient-blobs";
 
 const serviceIcons = [Search, Sparkles, Code2, Rocket, Cpu, Palette, Target, Share2, Mail];
+const serviceIconKeys: MobileServiceSlide["iconKey"][] = [
+  "search",
+  "sparkles",
+  "code2",
+  "rocket",
+  "cpu",
+  "palette",
+  "target",
+  "share2",
+  "mail",
+];
 
 export function Services() {
   return (
@@ -24,7 +36,23 @@ export function Services() {
           <p className="mt-4 font-body text-body text-neutral-600">{servicesContent.subheadline}</p>
         </ScrollReveal>
 
-        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+        {/* Mobile only: single-row auto-sliding carousel, matching the
+            Portfolio section's mobile treatment. The grid below is
+            unchanged at sm and up. */}
+        <div className="mt-14 sm:hidden">
+          <MobileServiceSlider
+            services={servicesContent.services.map((service, index) => ({
+              name: service.name,
+              description: service.description,
+              href: service.href,
+              anchorText: service.anchorText,
+              iconKey: serviceIconKeys[index % serviceIconKeys.length],
+              accent: index % 2 === 0 ? "navy" : "signal",
+            }))}
+          />
+        </div>
+
+        <div className="mt-14 hidden gap-5 sm:grid sm:grid-cols-2 md:grid-cols-3">
           {servicesContent.services.map((service, index) => (
             <ServiceCard key={service.name} index={index}>
               <FeatureCard

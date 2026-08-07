@@ -59,20 +59,26 @@ export function TestimonialCard({ handleShuffle, onDragActive, testimonial, posi
         onDragActive(false);
       }}
       transition={{ duration: 0.35 }}
-      className={`absolute left-0 top-0 grid h-[360px] w-[68vw] max-w-[280px] select-none place-content-center space-y-6 rounded-2xl border-2 border-cream-2 bg-white p-7 shadow-xl sm:h-[420px] sm:w-[320px] sm:max-w-none md:h-[450px] md:w-[350px] ${
+      className={`absolute left-0 top-0 grid h-[380px] w-[68vw] max-w-[280px] select-none place-content-center space-y-3 rounded-2xl border-2 border-cream-2 bg-white p-5 shadow-xl sm:h-[420px] sm:w-[320px] sm:max-w-none sm:space-y-6 sm:p-7 md:h-[450px] md:w-[350px] ${
         isFront ? "cursor-grab active:cursor-grabbing" : ""
       }`}
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-navy text-lg font-bold text-white"
+        className="pointer-events-none mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-navy text-xs font-bold text-white sm:h-16 sm:w-16 sm:text-lg"
       >
         {initials(name)}
       </div>
-      <span className="text-center font-body text-body-card italic leading-relaxed text-navy/80">&ldquo;{testimonial}&rdquo;</span>
+      {/* Quote text shrinks and tightens up on mobile only -- the card
+          itself was also shrunk to fit narrow phones, and at the original
+          16px/leading-relaxed the longest quotes (200+ characters) ran
+          past the bottom of the card into the sibling card behind it. */}
+      <span className="text-center font-body text-[12px] italic leading-snug text-navy/80 sm:text-body-card sm:leading-relaxed">
+        &ldquo;{testimonial}&rdquo;
+      </span>
       <div className="text-center">
-        <span className="block text-sm font-bold text-navy">{name}</span>
-        <span className="block text-xs text-signal">{role}</span>
+        <span className="block text-xs font-bold text-navy sm:text-sm">{name}</span>
+        <span className="block text-[10px] text-signal sm:text-xs">{role}</span>
       </div>
     </motion.div>
   );
@@ -121,7 +127,7 @@ export function ShuffleCards({ testimonials }: ShuffleCardsProps) {
 
   return (
     <div
-      className="relative mx-auto h-[360px] w-[68vw] max-w-[280px] sm:h-[420px] sm:w-[320px] sm:max-w-none md:h-[450px] md:w-[350px]"
+      className="relative mx-auto h-[380px] w-[68vw] max-w-[280px] sm:h-[420px] sm:w-[320px] sm:max-w-none md:h-[450px] md:w-[350px]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
