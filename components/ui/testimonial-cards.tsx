@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 interface TestimonialCardProps {
   handleShuffle: () => void;
+  onDragActive: (active: boolean) => void;
   testimonial: string;
   position: "front" | "middle" | "back";
   id: number;
@@ -21,7 +22,7 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-export function TestimonialCard({ handleShuffle, testimonial, position, id, name, role }: TestimonialCardProps) {
+export function TestimonialCard({ handleShuffle, onDragActive, testimonial, position, id, name, role }: TestimonialCardProps) {
   const dragRef = React.useRef(0);
   const isFront = position === "front";
 
@@ -40,6 +41,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, name
       dragConstraints={{ top: 0, left: 0, right: 0, bottom: 0 }}
       onDragStart={(e: any) => {
         dragRef.current = e.clientX ?? 0;
+        onDragActive(true);
       }}
       onDragEnd={(e: any) => {
         const endX = e.clientX ?? 0;
@@ -47,6 +49,7 @@ export function TestimonialCard({ handleShuffle, testimonial, position, id, name
           handleShuffle();
         }
         dragRef.current = 0;
+        onDragActive(false);
       }}
       transition={{ duration: 0.35 }}
       className={`absolute left-0 top-0 grid h-[420px] w-[320px] select-none place-content-center space-y-6 rounded-2xl border-2 border-cream-2 bg-white p-7 shadow-xl md:h-[450px] md:w-[350px] ${
@@ -72,18 +75,27 @@ interface ShuffleCardsProps {
   testimonials: Array<{ id: number; quote: string; name: string; role: string }>;
 }
 
+const AUTO_SHUFFLE_INTERVAL = 3000;
+
 export function ShuffleCards({ testimonials }: ShuffleCardsProps) {
   const [order, setOrder] = React.useState(testimonials.map((t) => t.id));
   const [hasShuffled, setHasShuffled] = React.useState(false);
+  const [isPaused, setIsPaused] = React.useState(false);
 
-  const handleShuffle = () => {
+  const handleShuffle = React.useCallback(() => {
     setHasShuffled(true);
     setOrder((prev) => {
       const next = [...prev];
       next.push(next.shift() as number);
       return next;
     });
-  };
+  }, []);
+
+  React.useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(handleShuffle, AUTO_SHUFFLE_INTERVAL);
+    return () => clearInterval(interval);
+  }, [handleShuffle, isPaused]);
 
   const positions: Array<"front" | "middle" | "back"> = ["front", "middle", "back"];
   const visible = order.slice(0, 3).map((id, index) => ({
@@ -92,7 +104,11 @@ export function ShuffleCards({ testimonials }: ShuffleCardsProps) {
   }));
 
   return (
-    <div className="relative mx-auto h-[420px] w-[320px] md:h-[450px] md:w-[350px]">
+    <div
+      className="relative mx-auto h-[420px] w-[320px] md:h-[450px] md:w-[350px]"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       {visible.map((t) => (
         <TestimonialCard
           key={t.id}
@@ -102,6 +118,7 @@ export function ShuffleCards({ testimonials }: ShuffleCardsProps) {
           role={t.role}
           position={t.position}
           handleShuffle={handleShuffle}
+          onDragActive={setIsPaused}
         />
       ))}
       {!hasShuffled && (
