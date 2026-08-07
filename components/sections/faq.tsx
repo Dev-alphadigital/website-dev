@@ -24,7 +24,6 @@ export function Faq() {
         <h2 className="text-center font-display text-h2-sm font-extrabold text-navy md:text-h2">
           {faqContent.headline}
         </h2>
-        <p className="mt-3 text-center text-sm font-medium text-neutral-500">{faqContent.authorNote}</p>
 
         <div className="mt-10">
           <AccordionReveal items={faqContent.faqs} />

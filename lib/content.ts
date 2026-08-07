@@ -278,8 +278,8 @@ export const caseStudiesContent = {
     {
       id: "enterprise-retail-seo",
       icon: "building2" as const,
-      industry: "Enterprise & Retail",
-      title: "SEO Services for Enterprises, Retail Brands",
+      industry: "Retail & Enterprises",
+      title: "SEO Services for Retail & Enterprises",
       description:
         "How we structure SEO for large, multi-location retail and enterprise brands, balancing scale, governance, and consistent visibility across every market.",
       highlights: [
@@ -303,7 +303,6 @@ export const midCtaContent = {
 
 export const faqContent = {
   headline: "Frequently Asked Questions",
-  authorNote: "Answered by Alpha Digital's strategy team.",
   faqs: [
     {
       question: "How long does SEO take to show results?",
