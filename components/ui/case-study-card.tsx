@@ -28,6 +28,19 @@ export type CaseStudy = {
 // native <button>, which keeps the HTML valid (a real <button> can't
 // contain an <a>) while `stopPropagation` on the link's click keeps it from
 // also re-triggering the flip.
+//
+// Hover/click/focus handlers live on the OUTER, never-transformed wrapper,
+// not on the element that actually gets `rotateY(...)`. That used to be one
+// div: as it rotates under perspective, its on-screen bounding box visibly
+// narrows (foreshortening), so a cursor sitting anywhere off-center -- an
+// edge or corner, which is a completely normal place to hover a card --
+// would end up outside the now-shrunk box mid-rotation. That fired
+// mouseleave, which reversed the flip, which grew the box back under the
+// cursor, which fired mouseenter again: an endless flicker loop that never
+// let the card finish flipping unless the cursor happened to land dead
+// center. The outer wrapper's hit-test box is a plain, untransformed
+// rectangle that never changes size, so hover stays stable everywhere on
+// the card regardless of rotation progress.
 export function CaseStudyCard({ study }: { study: CaseStudy }) {
   const [flipped, setFlipped] = React.useState(false);
   // Touch devices synthesize a mouseenter + click for a single tap on
@@ -46,28 +59,30 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
   const toggle = () => setFlipped((f) => !f);
 
   return (
-    <div className="[perspective:1600px]">
+    <div
+      role="button"
+      tabIndex={0}
+      aria-expanded={flipped}
+      aria-label={`${study.title} case study -- ${flipped ? "showing" : "show"} what's inside`}
+      onClick={() => {
+        if (!canHover) toggle();
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggle();
+        }
+      }}
+      onMouseEnter={() => {
+        if (canHover) setFlipped(true);
+      }}
+      onMouseLeave={() => {
+        if (canHover) setFlipped(false);
+      }}
+      className="cursor-pointer rounded-2xl outline-none [perspective:1600px] focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2"
+    >
       <div
-        role="button"
-        tabIndex={0}
-        aria-expanded={flipped}
-        aria-label={`${study.title} case study -- ${flipped ? "showing" : "show"} what's inside`}
-        onClick={() => {
-          if (!canHover) toggle();
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            toggle();
-          }
-        }}
-        onMouseEnter={() => {
-          if (canHover) setFlipped(true);
-        }}
-        onMouseLeave={() => {
-          if (canHover) setFlipped(false);
-        }}
-        className="group relative h-[440px] w-full cursor-pointer rounded-2xl outline-none [transform-style:preserve-3d] transition-transform duration-[900ms] ease-[cubic-bezier(0.645,0.045,0.355,1)] focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2"
+        className="group relative h-[440px] w-full rounded-2xl [transform-style:preserve-3d] transition-transform duration-[900ms] ease-[cubic-bezier(0.645,0.045,0.355,1)]"
         style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
       >
         {/* Front */}
