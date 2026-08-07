@@ -6,6 +6,7 @@ export function Portfolio() {
     title: project.name,
     category: project.category,
     href: project.href,
+    image: project.image,
   }));
 
   return (
