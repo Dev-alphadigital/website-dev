@@ -38,11 +38,26 @@ const CARD_GRADIENTS = [
 // 2. translateX/translateY magnitudes are scaled down from the original
 //    (1000px / -700..500px) to suit a compact 3-wide row instead of a
 //    5-wide one spilling off both edges of the screen.
+const AUTO_HIGHLIGHT_INTERVAL = 2200;
+
 export const HeroParallax = ({ products }: { products: ParallaxProject[] }) => {
   const rows: ParallaxProject[][] = [];
   for (let i = 0; i < products.length; i += 3) {
     rows.push(products.slice(i, i + 3));
   }
+
+  // Sweeps the hover-style overlay (category + title over a dark scrim)
+  // across the cards on its own, one at a time, so the reveal is visible
+  // without requiring a cursor -- pauses while the grid is actually being
+  // hovered so it doesn't fight the user's own interaction.
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const [isPaused, setIsPaused] = React.useState(false);
+
+  React.useEffect(() => {
+    if (isPaused) return;
+    const id = setInterval(() => setActiveIndex((i) => (i + 1) % products.length), AUTO_HIGHLIGHT_INTERVAL);
+    return () => clearInterval(id);
+  }, [isPaused, products.length]);
 
   const ref = React.useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -60,7 +75,12 @@ export const HeroParallax = ({ products }: { products: ParallaxProject[] }) => {
   const translateY = useSpring(useTransform(scrollYProgress, [0, 0.3], [-60, 0]), springConfig);
 
   return (
-    <div ref={ref} className="relative py-16 antialiased [perspective:1000px] [transform-style:preserve-3d] md:py-24">
+    <div
+      ref={ref}
+      className="relative py-16 antialiased [perspective:1000px] [transform-style:preserve-3d] md:py-24"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       <motion.div style={{ rotateX, rotateZ, translateY, opacity }}>
         {rows.map((row, rowIndex) => (
           <motion.div
@@ -74,6 +94,7 @@ export const HeroParallax = ({ products }: { products: ParallaxProject[] }) => {
                 product={product}
                 translate={rowIndex % 2 === 0 ? translateX : translateXReverse}
                 gradient={CARD_GRADIENTS[(rowIndex * 3 + i) % CARD_GRADIENTS.length]}
+                isAutoActive={rowIndex * 3 + i === activeIndex}
                 key={product.title}
               />
             ))}
@@ -88,10 +109,12 @@ export const ProductCard = ({
   product,
   translate,
   gradient,
+  isAutoActive,
 }: {
   product: ParallaxProject;
   translate: ReturnType<typeof useSpring>;
   gradient: string;
+  isAutoActive: boolean;
 }) => {
   return (
     <motion.div
@@ -121,12 +144,16 @@ export const ProductCard = ({
           </div>
         )}
       </Link>
-      <div className="pointer-events-none absolute inset-0 flex flex-col justify-end rounded-2xl bg-navy/85 p-5 opacity-0 transition-opacity duration-300 group-hover/product:opacity-100">
+      {/* Category + title over a dark scrim -- always readable, unlike plain
+          text over an arbitrary screenshot. Visible on hover, or on its own
+          turn in the auto-sweep. */}
+      <div
+        className={`pointer-events-none absolute inset-0 flex flex-col justify-end rounded-2xl bg-navy/85 p-5 transition-opacity duration-500 group-hover/product:opacity-100 ${
+          isAutoActive ? "opacity-100" : "opacity-0"
+        }`}
+      >
         <span className="text-[11px] font-bold uppercase tracking-widest text-signal">{product.category}</span>
         <h3 className="mt-1 font-display text-lg font-bold text-white">{product.title}</h3>
-      </div>
-      <div className="pointer-events-none absolute bottom-4 left-4 transition-opacity duration-300 group-hover/product:opacity-0">
-        <span className="font-display text-lg font-bold text-white">{product.title}</span>
       </div>
     </motion.div>
   );
