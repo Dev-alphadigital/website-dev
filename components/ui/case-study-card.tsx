@@ -67,7 +67,7 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
         onMouseLeave={() => {
           if (canHover) setFlipped(false);
         }}
-        className="group relative h-[440px] w-full cursor-pointer rounded-2xl outline-none [transform-style:preserve-3d] transition-transform duration-700 ease-out focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2"
+        className="group relative h-[440px] w-full cursor-pointer rounded-2xl outline-none [transform-style:preserve-3d] transition-transform duration-[900ms] ease-[cubic-bezier(0.645,0.045,0.355,1)] focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2"
         style={{ transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}
       >
         {/* Front */}
