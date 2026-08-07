@@ -20,14 +20,14 @@ interface SendFormEmailOptions {
 }
 
 // Requires SMTP_HOST / SMTP_PORT / SMTP_USER / SMTP_PASS (and optionally
-// MAIL_FROM / MAIL_TO) to be set -- see .env.local.example. Without them,
-// this throws a descriptive error rather than silently pretending to send.
+// MAIL_FROM / MAIL_TO) to be set -- see .env.example. Without them, this
+// throws a descriptive error rather than silently pretending to send.
 export async function sendFormEmail({ formName, fields, attachments, replyTo }: SendFormEmailOptions) {
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_FROM, MAIL_TO } = process.env;
 
   if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
     throw new Error(
-      "Email is not configured: set SMTP_HOST, SMTP_PORT, SMTP_USER, and SMTP_PASS (see .env.local.example)."
+      "Email is not configured: set SMTP_HOST, SMTP_PORT, SMTP_USER, and SMTP_PASS (see .env.example)."
     );
   }
 
