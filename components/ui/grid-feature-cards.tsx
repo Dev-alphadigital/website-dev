@@ -41,7 +41,7 @@ export function FeatureCard({ feature, className, ...props }: FeatureCardProps) 
       <div className="pointer-events-none absolute top-0 left-1/2 -mt-2 -ml-20 h-full w-full [mask-image:linear-gradient(white,transparent)]">
         <div
           className={cn(
-            "absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] opacity-100",
+            "absolute inset-0 bg-gradient-to-r [mask-image:radial-gradient(farthest-side_at_top,white,transparent)] opacity-60 transition-opacity duration-500 group-hover/card:opacity-100",
             accent.wash
           )}
         >
@@ -55,7 +55,12 @@ export function FeatureCard({ feature, className, ...props }: FeatureCardProps) 
           />
         </div>
       </div>
-      <div className={cn("relative z-20 inline-flex h-11 w-11 items-center justify-center rounded-xl", accent.badge)}>
+      <div
+        className={cn(
+          "relative z-20 inline-flex h-11 w-11 items-center justify-center rounded-xl transition-transform duration-300 group-hover/card:-rotate-6 group-hover/card:scale-110",
+          accent.badge
+        )}
+      >
         <feature.icon className="size-5" strokeWidth={1.75} aria-hidden />
       </div>
       <h3 className="relative z-20 mt-8 font-display text-sm font-bold text-navy md:text-base">{feature.title}</h3>

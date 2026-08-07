@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Search, Sparkles, Code2, Rocket, Cpu, Palette, Target, Share2, Mail } from "lucide-react";
 import { servicesContent } from "@/lib/content";
 import { FeatureCard } from "@/components/ui/grid-feature-cards";
+import { ServiceCard } from "@/components/ui/service-card";
 import { ScrollReveal } from "@/components/shared/scroll-reveal";
 
 const serviceIcons = [Search, Sparkles, Code2, Rocket, Cpu, Palette, Target, Share2, Mail];
@@ -21,12 +22,9 @@ export function Services() {
           <p className="mt-4 text-base text-neutral-600 md:text-lg">{servicesContent.subheadline}</p>
         </ScrollReveal>
 
-        <ScrollReveal
-          delay={0.3}
-          className="mt-14 grid grid-cols-1 divide-x divide-y divide-dashed divide-navy/15 border border-dashed border-navy/15 bg-white sm:grid-cols-2 md:grid-cols-3"
-        >
+        <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
           {servicesContent.services.map((service, index) => (
-            <div key={service.name} className="group flex flex-col">
+            <ServiceCard key={service.name} index={index}>
               <FeatureCard
                 className="flex-1"
                 feature={{
@@ -41,11 +39,11 @@ export function Services() {
                 className="relative z-20 mb-6 ml-6 inline-flex w-fit items-center gap-1.5 text-xs font-bold text-signal"
               >
                 {service.anchorText}
-                <ArrowRight size={13} className="transition group-hover:translate-x-1" />
+                <ArrowRight size={13} className="transition-transform duration-300 group-hover/card:translate-x-1" />
               </Link>
-            </div>
+            </ServiceCard>
           ))}
-        </ScrollReveal>
+        </div>
 
         <div className="mt-12 text-center">
           <a
