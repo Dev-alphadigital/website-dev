@@ -197,7 +197,10 @@ export function FeatureCarousel({ features }: { features: CarouselFeature[] }) {
                           <div className="mb-3 w-fit rounded-full border border-white/20 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-navy shadow-lg">
                             {index + 1} &bull; {feature.label}
                           </div>
-                          <p className="font-display text-xl font-bold leading-tight tracking-tight text-white drop-shadow-md md:text-2xl">
+                          {/* Mobile-only: 20px (text-xl) read as oversized
+                              against the card, reduced ~40% to 12px.
+                              md:text-2xl (unchanged) keeps desktop as-is. */}
+                          <p className="font-display text-[12px] font-bold leading-tight tracking-tight text-white drop-shadow-md md:text-2xl">
                             {feature.description}
                           </p>
                         </motion.div>

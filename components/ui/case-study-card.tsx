@@ -53,6 +53,18 @@ export function CaseStudyCard({ study }: { study: CaseStudy }) {
   React.useEffect(() => {
     setCanHover(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
   }, []);
+
+  // Mobile only (no hover to reveal the back on its own): auto-flip every
+  // 2s so the "what's inside" content is visible without requiring a tap.
+  // Depending on `flipped` means every flip -- whether from this timer or
+  // from a manual tap -- restarts the 2s countdown, so a manual tap
+  // doesn't get immediately fought by the timer flipping it right back.
+  React.useEffect(() => {
+    if (canHover) return;
+    const id = setTimeout(() => setFlipped((f) => !f), 2000);
+    return () => clearTimeout(id);
+  }, [canHover, flipped]);
+
   const Icon = iconMap[study.icon];
   const gradient = CARD_GRADIENTS[study.id] ?? "from-navy via-navy to-signal";
 
