@@ -4,6 +4,7 @@ import { servicesContent } from "@/lib/content";
 import { FeatureCard } from "@/components/ui/grid-feature-cards";
 import { ServiceCard } from "@/components/ui/service-card";
 import { MobileServiceSlider, type MobileServiceSlide } from "@/components/ui/mobile-service-slider";
+import { ReadMoreText } from "@/components/ui/read-more-text";
 import { ScrollReveal } from "@/components/shared/scroll-reveal";
 import { AmbientBlobs } from "@/components/shared/ambient-blobs";
 
@@ -33,7 +34,11 @@ export function Services() {
         <ScrollReveal className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-signal">{servicesContent.eyebrow}</p>
           <h2 className="font-display text-h2-sm font-extrabold text-navy md:text-h2">{servicesContent.headline}</h2>
-          <p className="mt-4 font-body text-body text-neutral-600">{servicesContent.subheadline}</p>
+          <ReadMoreText
+            text={servicesContent.subheadline}
+            cutoff="Our SEO team shares keyword data with the people writing your ads."
+            className="mt-4 font-body text-body text-neutral-600"
+          />
         </ScrollReveal>
 
         {/* Mobile only: single-row auto-sliding carousel, matching the
