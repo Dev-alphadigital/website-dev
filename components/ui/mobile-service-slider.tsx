@@ -2,7 +2,21 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { ArrowRight, Search, Sparkles, Code2, Rocket, Cpu, Palette, Target, Share2, Mail, type LucideIcon } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  Sparkles,
+  Code2,
+  Rocket,
+  Cpu,
+  Palette,
+  Target,
+  Share2,
+  Mail,
+  type LucideIcon,
+} from "lucide-react";
 import { FeatureCard } from "@/components/ui/grid-feature-cards";
 
 // Icons resolve by key rather than a component reference passed in as a
@@ -36,11 +50,17 @@ export function MobileServiceSlider({ services }: { services: MobileServiceSlide
   const [index, setIndex] = React.useState(0);
   const [isPaused, setIsPaused] = React.useState(false);
 
+  // Depending on `index` (not just `isPaused`) means every step -- whether
+  // from this timer or the prev/next buttons -- restarts the 2s countdown,
+  // so tapping a button doesn't get immediately undone by the timer
+  // advancing again right behind it.
   React.useEffect(() => {
     if (isPaused) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % services.length), SLIDE_INTERVAL);
-    return () => clearInterval(id);
-  }, [isPaused, services.length]);
+    const id = setTimeout(() => setIndex((i) => (i + 1) % services.length), SLIDE_INTERVAL);
+    return () => clearTimeout(id);
+  }, [isPaused, index, services.length]);
+
+  const goTo = (next: number) => setIndex(((next % services.length) + services.length) % services.length);
 
   return (
     <div onTouchStart={() => setIsPaused(true)} onTouchEnd={() => setIsPaused(false)}>
@@ -70,13 +90,31 @@ export function MobileServiceSlider({ services }: { services: MobileServiceSlide
           ))}
         </div>
       </div>
-      <div className="mt-5 flex justify-center gap-1.5">
-        {services.map((_, i) => (
-          <span
-            key={i}
-            className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-5 bg-signal" : "w-1.5 bg-navy/20"}`}
-          />
-        ))}
+      <div className="mt-5 flex items-center justify-center gap-4">
+        <button
+          type="button"
+          onClick={() => goTo(index - 1)}
+          aria-label="Previous service"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-signal hover:text-signal"
+        >
+          <ChevronLeft size={18} aria-hidden />
+        </button>
+        <div className="flex gap-1.5">
+          {services.map((_, i) => (
+            <span
+              key={i}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-5 bg-signal" : "w-1.5 bg-navy/20"}`}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => goTo(index + 1)}
+          aria-label="Next service"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-navy/15 text-navy transition hover:border-signal hover:text-signal"
+        >
+          <ChevronRight size={18} aria-hidden />
+        </button>
       </div>
     </div>
   );

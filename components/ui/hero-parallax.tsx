@@ -4,6 +4,7 @@ import React from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export type ParallaxProject = {
   title: string;
@@ -118,11 +119,17 @@ function MobileProductSlider({ products }: { products: ParallaxProject[] }) {
   const [index, setIndex] = React.useState(0);
   const [isPaused, setIsPaused] = React.useState(false);
 
+  // Depending on `index` (not just `isPaused`) means every step -- whether
+  // from this timer or the prev/next buttons -- restarts the 2s countdown,
+  // so tapping a button doesn't get immediately undone by the timer
+  // advancing again right behind it.
   React.useEffect(() => {
     if (isPaused) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % products.length), MOBILE_SLIDE_INTERVAL);
-    return () => clearInterval(id);
-  }, [isPaused, products.length]);
+    const id = setTimeout(() => setIndex((i) => (i + 1) % products.length), MOBILE_SLIDE_INTERVAL);
+    return () => clearTimeout(id);
+  }, [isPaused, index, products.length]);
+
+  const goTo = (next: number) => setIndex(((next % products.length) + products.length) % products.length);
 
   return (
     <div onTouchStart={() => setIsPaused(true)} onTouchEnd={() => setIsPaused(false)}>
@@ -162,13 +169,31 @@ function MobileProductSlider({ products }: { products: ParallaxProject[] }) {
           ))}
         </div>
       </div>
-      <div className="mt-5 flex justify-center gap-1.5">
-        {products.map((_, i) => (
-          <span
-            key={i}
-            className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-5 bg-signal" : "w-1.5 bg-navy/20"}`}
-          />
-        ))}
+      <div className="mt-5 flex items-center justify-center gap-4">
+        <button
+          type="button"
+          onClick={() => goTo(index - 1)}
+          aria-label="Previous project"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-signal hover:text-signal"
+        >
+          <ChevronLeft size={18} aria-hidden />
+        </button>
+        <div className="flex gap-1.5">
+          {products.map((_, i) => (
+            <span
+              key={i}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-5 bg-signal" : "w-1.5 bg-navy/20"}`}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => goTo(index + 1)}
+          aria-label="Next project"
+          className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-white/20 text-white transition hover:border-signal hover:text-signal"
+        >
+          <ChevronRight size={18} aria-hidden />
+        </button>
       </div>
     </div>
   );
