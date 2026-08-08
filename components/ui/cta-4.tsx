@@ -40,17 +40,10 @@ export const Cta4 = ({
   items = defaultItems,
 }: Cta4Props) => {
   return (
-    <div className="flex flex-col items-start justify-between gap-8 rounded-2xl bg-blue-sub px-6 py-10 md:flex-row md:items-center lg:px-16 lg:py-14">
-      <div className="md:w-1/2">
-        <h2 className="font-display text-h2-sm font-extrabold text-white md:text-h2">{title}</h2>
-        <p className="mt-3 text-body-sm text-white/85 md:text-body">{description}</p>
-        <Button className="mt-6" asChild>
-          <a href={buttonUrl}>
-            {buttonText} <ArrowRight className="size-4" aria-hidden />
-          </a>
-        </Button>
-      </div>
-      <div className="md:w-2/5">
+    <div className="flex flex-col items-center gap-8 rounded-2xl bg-blue-sub px-6 py-10 text-center lg:px-16 lg:py-14">
+      <h2 className="font-display text-h2-sm font-extrabold text-white md:text-h2">{title}</h2>
+      <div className="flex w-full flex-col items-center gap-8 text-left md:flex-row md:items-center md:justify-center md:gap-16">
+        <p className="text-body-sm text-white/85 md:max-w-md md:text-body">{description}</p>
         <ul className="flex flex-col space-y-3 text-btn-sm font-medium text-white">
           {items.map((item, idx) => (
             <li className="flex items-center gap-3" key={idx}>
@@ -60,6 +53,11 @@ export const Cta4 = ({
           ))}
         </ul>
       </div>
+      <Button asChild>
+        <a href={buttonUrl}>
+          {buttonText} <ArrowRight className="size-4" aria-hidden />
+        </a>
+      </Button>
     </div>
   );
 };
