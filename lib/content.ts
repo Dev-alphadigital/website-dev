@@ -304,6 +304,13 @@ export const midCtaContent = {
   subheadline:
     "We'll audit your SEO, page speed, and current marketing setup, then send a plain-language breakdown of what's working and what's costing you customers. No cost, no obligation.",
   cta: { label: "Get My Free Audit", href: "#lead-form" },
+  items: [
+    "Free, no-obligation site audit",
+    "Plain-language breakdown, no jargon",
+    "Response within 1 business day",
+    "Built for businesses of any size",
+    "No spam, ever",
+  ],
 };
 
 export const faqContent = {
